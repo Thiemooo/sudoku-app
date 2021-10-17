@@ -33,7 +33,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/store/modules/Sudoku.ts", "src/store/index.ts", "src/main.js"  ],
   "exclude": [
     "node_modules"
   ]
