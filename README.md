@@ -2,6 +2,7 @@
 
 ## Description
 This **Sudoku-Web-App** generates a Sudoku, which can be solved by *you*!
+### Have fun!
 
 ## Project setup
 ```
