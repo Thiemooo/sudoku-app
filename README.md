@@ -1,5 +1,8 @@
 # sudoku-app
 
+## Description
+This **Sudoku-Web-App** generates a Sudoku, which can be solved by *you*!
+
 ## Project setup
 ```
 yarn install
