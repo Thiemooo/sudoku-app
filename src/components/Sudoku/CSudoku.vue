@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="button-container">
-      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" color="rgb(0, 0, 8)">Start</c-button>
+      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
     </div>
     <div class="sudoku-container">
       <c-selection-bar    v-if="!getIfFirst" style="margin-right: 7.5rem;" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
@@ -31,7 +31,7 @@ import CButton from '../Utility/CButton.vue';
     CButton,
   },
   methods: {
-    ...mapActions(['createSudoku', 'hideSudoku', 'setIfIsFirst', 'updateSelectedField', 'switchIfIsNoting', 'changeNotations']),
+    ...mapActions(['createSudoku', 'hideSudoku', 'setIfIsFirst', 'updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep']),
     startSudoku() {
       this.createSudoku();
       this.setIfIsFirst(false);
@@ -56,7 +56,7 @@ import CButton from '../Utility/CButton.vue';
     },
     onActionClick(actionField) {
       const ActionFields = this.getActionFieldIDs;
-        console.log(ActionFields.Delete);
+      
       if (actionField.fieldID == ActionFields.Delete) {
         console.log(ActionFields.Delete);
         const selectedField = this.getSelectedField;
@@ -74,10 +74,14 @@ import CButton from '../Utility/CButton.vue';
         selectedField.notations = [];
         this.updateSelectedField(selectedField);
       }
+      else if (actionField.fieldID == ActionFields.Undo) {
+        console.log(ActionFields.Undo + ' is calling undoStep!');
+        this.undoStep();
+      }
     }
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getIfFirst', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getIfFirst', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps']),
   },
 })
 export default class CSudoku extends Vue {}

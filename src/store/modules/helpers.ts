@@ -1,5 +1,5 @@
 /*=================================================================*/
-export interface SudokoField {
+export interface SudokuField {
   fieldID:      string;
   square:       number;
   row:          number;
@@ -12,7 +12,7 @@ export interface SudokoField {
   notations:    string[];
 }
 /*=================================================================*/
-const forEachSudokuField = (sudoku: SudokoField[][], callback: { (field: SudokoField): void} ): SudokoField[][] => {
+const forEachSudokuField = (sudoku: SudokuField[][], callback: { (field: SudokuField): void} ): SudokuField[][] => {
   
   // Run the callback function on every field of the sudoku
   for (let square = 0; square < 9; square++) {
