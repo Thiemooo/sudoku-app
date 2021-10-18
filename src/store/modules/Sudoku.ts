@@ -214,7 +214,7 @@ const actions = {
     for (let square = 0; square < 9; square++) {
       for (let field = 0; field < 9; field++) {
         const cF: SudokuField = sudoku[square][field];
-        if (Math.random() > 0.4) cF.hidden = true;
+        if (Math.random() > 0.3) cF.hidden = true;
       }
     }
     
