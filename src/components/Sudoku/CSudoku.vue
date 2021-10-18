@@ -1,8 +1,5 @@
 <template>
   <div class="container">
-    <div class="button-container">
-      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
-    </div>
     <div class="sudoku-container">
       <c-selection-bar    v-if="!getIfFirst" style="margin-right: 7.5rem;" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
       <c-selection-bar    v-if="!getIfFirst" style="margin-right: 7.5rem;" :content="getActionFields" @onSelectionBarClick="onActionClick"></c-selection-bar>
@@ -22,21 +19,14 @@ import { mapGetters, mapActions } from 'vuex';
 import { Component, Vue } from 'vue-property-decorator';
 import CSudokuSquare from './CSudokuSquare.vue';
 import CSelectionBar from './CSelectionBar.vue';
-import CButton from '../Utility/CButton.vue';
 
 @Component({
   components: {
     CSudokuSquare,
     CSelectionBar,
-    CButton,
   },
   methods: {
-    ...mapActions(['createSudoku', 'hideSudoku', 'setIfIsFirst', 'updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep']),
-    startSudoku() {
-      this.createSudoku();
-      this.setIfIsFirst(false);
-      this.hideSudoku();
-    },
+    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep']),
     fillInContent(numberField) { 
       const selectedField = this.getSelectedField;
       if (selectedField.hidden) {
@@ -94,10 +84,6 @@ export default class CSudoku extends Vue {}
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-.button-container button {
-  margin-left: 3rem;
-  margin-right: 3rem;
 }
 .sudoku-container {
   display: flex;

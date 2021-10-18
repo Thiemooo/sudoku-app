@@ -2,6 +2,7 @@ class LinkedList {
 
   public head: LinkedListNode | null;
 
+  /** Creates an empty LinkedList */
   constructor() {
     this.head = null;
   }
