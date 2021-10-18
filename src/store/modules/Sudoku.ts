@@ -214,7 +214,7 @@ const actions = {
     for (let square = 0; square < 9; square++) {
       for (let field = 0; field < 9; field++) {
         const cF: SudokuField = sudoku[square][field];
-        if (Math.random() > 0.2) cF.hidden = true;
+        if (Math.random() > 0.4) cF.hidden = true;
       }
     }
     
@@ -285,12 +285,12 @@ const actions = {
     if (state.steps.search(toRecreateField.id) == null) toRecreateField.content = 0;    // If there is no entry for the id, initiate the clear of that field
     else toRecreateField = state.steps.last();                                          // Else get the new last field
     const newSudoku = forEachSudokuField(state.sudokuContent, (cF) => {                 // Update the field
-      if (cF.fieldID == toRecreateField!.id) {
-        if (toRecreateField!.content == 0) {
+      if (cF.fieldID == toRecreateField?.id) {
+        if (toRecreateField?.content == 0) {
           cF.wrong = false;
           cF.wrongContent = '';
         }
-        else cF.wrongContent = toRecreateField!.content;
+        else cF.wrongContent = toRecreateField?.content;
         
         if (state.selectedField != cF) dispatch('selectField', cF);                     // Select re-created field, if not yet selected
       }
