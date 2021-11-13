@@ -32,9 +32,10 @@ import CSelectionBar from './CSelectionBar.vue';
       if (selectedField.hidden) {
         if (this.getIfIsNoting) this.changeNotations({ field: selectedField, notation: numberField.content.toString() });
         else {
-          if (selectedField.content == numberField.content) {
-            selectedField.hidden = false;
-            selectedField.wrong  = false;
+          if (selectedField.possibleContents.indexOf(numberField.content) != -1) {
+            selectedField.hidden  = false;
+            selectedField.wrong   = false;
+            selectedField.content = numberField.content;
           }
           else {
             selectedField.wrong  = true;

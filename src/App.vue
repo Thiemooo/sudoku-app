@@ -3,11 +3,6 @@
     <div class="button-container">
       <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
     </div>
-    <!-- <div v-if="!started" class="beforeStart">
-      <div class="chooseContent">
-        <c-content v-for="content in getAllContents" :key="getAllContents.indexOf(content)" :content="content"></c-content>
-      </div>
-    </div> -->
     <c-sudoku></c-sudoku>
   </div>
 </template>
@@ -34,7 +29,7 @@ import CContent from './components/Sudoku/CContent.vue';
     },
   },
   computed: {
-    ...mapGetters(['getAllContents', 'getIfFirst']),
+    ...mapGetters(['getIfFirst']),
     started: ()  => !this.getIfFirst,
   }
 })

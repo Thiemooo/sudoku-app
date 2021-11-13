@@ -1,15 +1,15 @@
-/*=================================================================*/
 export interface SudokuField {
-  fieldID:      string;
-  square:       number;
-  row:          number;
-  column:       number;
-  content:      number | string;
-  data:         string;
-  hidden:       boolean;
-  wrong:        boolean;
-  wrongContent: number | string;
-  notations:    string[];
+  fieldID:          string;
+  square:           number;
+  row:              number;
+  column:           number;
+  possibleContents: number[] | string;
+  content:          number | string;
+  data:             string;
+  hidden:           boolean;
+  wrong:            boolean;
+  wrongContent:     number | string;
+  notations:        string[];
 }
 /*=================================================================*/
 function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuField): void} ): SudokuField[][] {
