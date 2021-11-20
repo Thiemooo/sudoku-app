@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <div class="button-container">
-      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
+    <div class="container">
+      <div class="button-container">
+        <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
+      </div>
+      <c-sudoku></c-sudoku>
     </div>
-    <c-sudoku></c-sudoku>
   </div>
 </template>
 
@@ -41,10 +43,15 @@ export default class App extends Vue {}
 body {
   background-color: rgb(0, 0, 8);
   overflow: hidden;
+  height: 100vh;
+  padding: 2rem;
 }
-
 * {
   font-family: 'Indie Flower';
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -53,11 +60,18 @@ body {
   text-align: center;
   // color: #2c3e50;
   color: #af4e9a;
-  margin-top: 3rem;
-  transform: scale(0.8);
+  height: 100%;
 }
 .button-container button {
   margin-left: 3rem;
   margin-right: 3rem;
+}
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
 }
 </style>

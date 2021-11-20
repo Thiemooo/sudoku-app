@@ -1,5 +1,5 @@
 <template>
-  <div class="sudoku-field" @click="fieldClick">
+  <div class="sudoku-field" @click="fieldClick" :style="{'--width': width}">
     <div class="notations" v-if="field.hidden">
       <span v-for="notation in getNotations" 
             :key="notation"
@@ -29,6 +29,7 @@ import { Component, Vue } from 'vue-property-decorator';
   props: [
     'field',
     'selected',
+    'width'
   ],
   methods: {
     fieldClick() {
@@ -84,14 +85,15 @@ export default class CSudokuField extends Vue {}
 .sudoku-field {
   border: 1px solid rgb(153, 146, 179);
   border-radius: 3px;
-  font-size: 3.5rem;
+  font-size: 3rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 0 0 100%;
+  position: relative;
   width: 100%;
   height: 100%;
-  flex: 0 0 100%;
 }
 .row, .column {
   border: 1px solid rgb(197, 52, 190);
@@ -113,13 +115,14 @@ export default class CSudokuField extends Vue {}
 .selectedIncorrect {
   width: 100%;
   height: 100%;
-  background-color: #e08383;
+  background-color: #dd6565;
   color: rgb(0, 0, 8);
 }
 .incorrect {
   width: 100%;
   height: 100%;
-  background-color: #8f2525;
+  // background-color: #8f2525;
+  background-color: #830000;
   color: rgb(0, 0, 8);
 }
 .numberField, .actionField {
@@ -127,9 +130,9 @@ export default class CSudokuField extends Vue {}
 }
 .numberField:hover, .actionField:hover, .active {
   color: rgb(0, 0, 8);
-  background-color: #2c3e50;
+  background-color: #af4e9a;
 }
-.numberField:active {
+.numberField:active, .actionField:active {
   color: white;
 }
 .notations {

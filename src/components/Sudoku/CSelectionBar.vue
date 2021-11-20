@@ -47,7 +47,6 @@ export default class CSelectionBar extends Vue {}
   display: grid;
   grid-template-rows: repeat(var(--count), 1fr);
   grid-row-gap: 2px;
-  border: 1px solid rgb(153, 146, 179);
 }
 .selection-bar div {
   border-top: 1px solid rgb(153, 146, 179);

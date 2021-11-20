@@ -1,15 +1,15 @@
 <template>
-  <div class="container">
-    <div class="sudoku-container">
-      <c-selection-bar    v-if="!getIfFirst" style="margin-right: 7.5rem;" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
-      <c-selection-bar    v-if="!getIfFirst" style="margin-right: 7.5rem;" :content="getActionFields" @onSelectionBarClick="onActionClick"></c-selection-bar>
-      <div class="sudoku" v-if="!getIfFirst">
-        <c-sudoku-square  v-for="sC in this.getContent" 
-                          :key="getContent.indexOf(sC)+1"
-                          :squareID="getContent.indexOf(sC)+1" 
-                          :squareContent="sC"
-        ></c-sudoku-square>
-      </div>
+  <div class="sudoku-container">
+    <div class="selection-bar-container">
+      <c-selection-bar    v-if="!getIfFirst" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
+      <c-selection-bar    v-if="!getIfFirst" :content="getActionFields" @onSelectionBarClick="onActionClick"></c-selection-bar>
+    </div>
+    <div class="sudoku" v-if="!getIfFirst">
+      <c-sudoku-square  v-for="sC in this.getContent" 
+                        :key="getContent.indexOf(sC)+1"
+                        :squareID="getContent.indexOf(sC)+1" 
+                        :squareContent="sC"
+      ></c-sudoku-square>
     </div>
   </div>
 </template>
@@ -79,25 +79,24 @@ export default class CSudoku extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 .sudoku-container {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.selection-bar-container {
+  width: 25%;
+  display: flex;
+  justify-content: space-evenly;
 }
 .sudoku {
-  width: 55rem;
-  height: 55rem;
+  width:  50rem;
+  height: 50rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 10px;
   grid-column-gap: 10px;
-  user-select: none;
 }
 </style>
