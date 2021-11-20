@@ -1,7 +1,7 @@
 # sudoku-app
 
 ## Description
-This **Sudoku-Web-App** generates a Sudoku, which can be solved by *you*!
+This **Sudoku-Web-App** generates a Sudoku[^1], which can be solved by *you*!
 ### Have fun! 
 <br />
 
@@ -27,3 +27,5 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+[^1]: Generating via API: https://github.com/bertoort/sugoku
