@@ -1,8 +1,8 @@
 import { Commit, Dispatch } from 'vuex';
-import { SudokuField, forEachSudokuField, shuffleArray } from './helpers';
+import { SudokuField, forEachSudokuField/*, shuffleArray*/ } from './helpers';
 import { FieldTypes } from './FieldInfo';
 import LinkedList, { LinkedListNode } from './LinkedList';
-import solve from './SudokuSolver';
+import { solve, createBoilerplate } from './SudokuSolver';
 
 /*=================================================================*/
 type SudokuState = typeof state;
@@ -126,30 +126,29 @@ const getters = {
 };
 /*=================================================================*/
 const actions = {
-  createSudoku       ({ commit }: {commit: Commit}): void {
+  async createSudoku       ({ commit }: {commit: Commit}): Promise<void> {
     const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const sudoku:       SudokuField[][]  = new Array(9);
     const sudokuContent: number[][]      = new Array(9);
     const numberFields: SudokuField[]    = new Array(9);
     const actionSymbol                   = ['↺', '✗', '✎°', '✎x'];
     const actionFields: SudokuField[]    = new Array(actionSymbol.length);
-    let add                              = 0;
     let rowAdd                           = 1;
     let colAdd                           = 1;
 
-    const boilerPlate = [
-      [5, 3, 0,   0, 7, 0,   0, 0, 0],
-      [0, 0, 0,   1, 9, 5,   0, 0, 0],
-      [0, 9, 8,   0, 0, 0,   0, 6, 0],
-
-      [8, 0, 0,   0, 0, 0,   0, 0, 3],
-      [4, 0, 0,   0, 0, 0,   0, 0, 1],
-      [7, 0, 0,   0, 0, 0,   0, 0, 6],
-
-      [0, 6, 0,   0, 0, 0,   2, 8, 0],
-      [0, 0, 0,   4, 1, 9,   0, 0, 5],
-      [0, 0, 0,   0, 8, 0,   0, 7, 9],
-    ];
+    // const boilerPlate = [
+    //     [5, 3, 0,   0, 7, 0,   0, 0, 0],
+    //     [0, 0, 0,   1, 9, 5,   0, 0, 0],
+    //     [0, 9, 8,   0, 0, 0,   0, 6, 0],
+    
+    //     [8, 0, 0,   0, 0, 0,   0, 0, 3],
+    //     [4, 0, 0,   0, 0, 0,   0, 0, 1],
+    //     [7, 0, 0,   0, 0, 0,   0, 0, 6],
+    
+    //     [0, 6, 0,   0, 0, 0,   2, 8, 0],
+    //     [0, 0, 0,   4, 1, 9,   0, 0, 5],
+    //     [0, 0, 0,   0, 8, 0,   0, 7, 9],
+    //   ];
 
     // Setting up actionfields
     for (let i = 0; i < actionFields.length; i++) {
@@ -163,7 +162,7 @@ const actions = {
         fieldID: `0-0-${i+10}`,
         square: 0,
         row: 0,
-        possibleContents: [0],
+        possibleContents: [],
         column: 0,
         content: actionSymbol[i],
         data: FieldTypes.ActionField,
@@ -185,7 +184,7 @@ const actions = {
         row: 0,
         column: 0,
         content: i+1,
-        possibleContents: [0], // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        possibleContents: [],
         data: FieldTypes.NumberField,
         hidden: false,
         wrong: false,
@@ -195,17 +194,19 @@ const actions = {
     }
 
     
-    // Computing Sudoku
-
+    // Computing Sudoku (API)
+    const boilerPlate = await createBoilerplate();
+    console.log(boilerPlate);
     const allSolutions = solve(boilerPlate);
+    console.log(allSolutions.length + " possibilities.");
 
     // Setting up Sudoku for website
     for (let square = 0; square < 9; square++) {
       sudoku[square] = new Array(9);
-      for (let field = 0; field < 9; field++) {                
-        if (square < 3) { add = 0; }
-        else if (square >= 6) { add = 7; rowAdd = 7; }
-        else { add = 8; rowAdd = 4; }
+      for (let field = 0; field < 9; field++) {   
+        if (square < 3) rowAdd = 1;
+        else if (square >= 6) rowAdd = 7;
+        else rowAdd = 4; 
 
         if (square % 3 == 0) colAdd = 1;
         else if (square % 3 == 2) colAdd = 7;
@@ -215,11 +216,11 @@ const actions = {
         const _row     = Math.floor(field/3) + rowAdd;
         const _column  = field % 3 + colAdd;
         const _data    = FieldTypes.SudokuField;
-        const _possibleContents = [0];
+        const _possibleContents = [];
         
         for (let i = 0; i < allSolutions.length; i++)
           if (_possibleContents.indexOf(allSolutions[i][_row-1][_column-1]) == -1) 
-            _possibleContents.push(allSolutions[i][_row-1][_column-1]);        
+            _possibleContents.push(allSolutions[i][_row-1][_column-1]);
 
         sudoku[square][field] = {
           fieldID: `${_square}-${_row}-${_column}`,
@@ -229,21 +230,22 @@ const actions = {
           content: boilerPlate[_row-1][_column-1],
           possibleContents: _possibleContents,
           data: _data,
-          hidden: false,
+          hidden: boilerPlate[_row-1][_column-1] == 0,
           wrong: false,
           wrongContent: 0,
           notations: [],
         }
       }
     }
-    
+
+    // console.log(allSolutions);
 
     commit('setSudoku', sudoku);
     commit('setBoilerplate', boilerPlate);
     commit('setNotations', pseudoNumbers);
     commit('setNumberFields', numberFields);
     commit('setActionFields', actionFields);
-    commit('setAllSolutions', allSolutions);
+
     // Create sudoku and selection fields
     // const numbers                        = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     // const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -334,19 +336,6 @@ const actions = {
     // commit('setActionFields', actionFields);
   },
   /*---------------------------------*/
-  hideSudoku         ({ commit }: {commit: Commit}): void {
-    const sudoku = state.sudokuContent;
-    for (let square = 0; square < 9; square++) {
-      for (let field = 0; field < 9; field++) {
-        const cF = sudoku[square][field];
-        // if (Math.random() > 0.3) cF.hidden = true;
-        if (cF.content == 0) cF.hidden = true;
-      }
-    }
-    
-    commit('setSudoku', sudoku);
-  },
-  /*---------------------------------*/
   setIfIsFirst       ({ commit }: {commit: Commit}, isFirst: boolean): void {
     commit('setIsFirst', isFirst);
   },
@@ -356,50 +345,60 @@ const actions = {
     else commit('setSelectedField', selectedField);
   },
   /*---------------------------------*/
-  updateSelectedField({ commit }: {commit: Commit }, newField: SudokuField): void {
+  updateSelectedField({ commit }: {commit: Commit }, data: { newField: SudokuField, onAction: boolean }): void {
     
     // If no field selected: return
-    if (newField.fieldID == fallbackField.fieldID) return;
+    if (data.newField.fieldID == fallbackField.fieldID) return;
     
     const boilerPlate = state.boilerplate;
-
-    const _possibleContents = [0];
     
-    let allSolutions;
+    let allSolutions: number[][][];
     // Else: Search and update the corresponding field in the sudoku
     const newSudoku = forEachSudokuField(state.sudokuContent, (cF) => {
-      if (cF.fieldID == newField.fieldID) {
-        cF.fieldID          = newField.fieldID;
-        cF.square           = newField.square;
-        cF.row              = newField.row;
-        cF.column           = newField.column;
-        cF.content          = newField.content;
-        cF.data             = newField.data;
-        cF.hidden           = newField.hidden;
-        cF.wrong            = newField.wrong;
-        cF.wrongContent     = newField.wrongContent;
-        cF.notations        = newField.notations;
+      if (cF.fieldID == data.newField.fieldID) {
+        cF.content          = data.newField.content;
+        cF.hidden           = data.newField.hidden;
+        cF.wrong            = data.newField.wrong;
+        cF.wrongContent     = data.newField.wrongContent;
+        cF.notations        = data.newField.notations;
         
-        boilerPlate[cF.row][cF.column] = parseInt(newField.content.toString());
-        
-        allSolutions = solve(boilerPlate);
-        
-        for (let i = 0; i < allSolutions.length; i++)
-          if (_possibleContents.indexOf(allSolutions[i][cF.row-1][cF.column-1]) == -1) 
-            _possibleContents.push(allSolutions[i][cF.row-1][cF.column-1]);
-
-        cF.possibleContents = _possibleContents;
-        commit('setBoilerplate', boilerPlate);
+        if (!data.newField.wrong) {
+          boilerPlate[cF.row-1][cF.column-1] = parseInt(data.newField.content.toString());
+        }
+        commit('setBoilerplate',  boilerPlate);
       }
     });
 
-    const newStep = new LinkedListNode(newField.fieldID, newField.wrongContent);
-    
-    if (!newField.hidden)                         commit('deleteSteps', newField.fieldID);
-    else if (!newStep.equals(state.steps.last())) commit('insertStep', newStep);
-    
-    commit('setSudoku', newSudoku);
-    commit('setAllSolutions', allSolutions);
+    if (!data.onAction && !data.newField.wrong) {
+      /*
+       * If the newfield is correct:
+       * Compute possibleContents for every other field and new allSolutions
+      */
+
+      allSolutions = solve(boilerPlate);
+      // console.log(allSolutions);
+      console.log(allSolutions.length + " possibilities.");
+      
+      const sudoku = forEachSudokuField(newSudoku, (cF) => {
+        if (cF.content == 0) {
+          const _possibleContents: number[] = [];
+          for (let i = 0; i < allSolutions.length; i++)
+            if (_possibleContents.indexOf(allSolutions[i][cF.row-1][cF.column-1]) == -1) 
+              _possibleContents.push(allSolutions[i][cF.row-1][cF.column-1]);
+          
+          cF.possibleContents = _possibleContents;
+        }
+      });
+      commit('setSudoku', sudoku);
+    }
+    else {
+      const newStep = new LinkedListNode(data.newField.fieldID, data.newField.wrongContent);
+      
+      if (!data.newField.hidden)                    commit('deleteSteps', data.newField.fieldID);
+      else if (!newStep.equals(state.steps.last())) commit('insertStep', newStep);
+      
+      commit('setSudoku', newSudoku);
+    }
   },
   /*---------------------------------*/
   switchIfIsNoting   ({ commit }: {commit: Commit}): void {
@@ -444,7 +443,6 @@ const actions = {
 };
 /*=================================================================*/
 const mutations = {
-  setAllSolutions:    (state: SudokuState, allSolutions: number[][][]): number[][][]   => state.allSolutions  = allSolutions,
   setBoilerplate:     (state: SudokuState, boilerplate: number[][]): number[][]        => state.boilerplate   = boilerplate,
   setSudoku:          (state: SudokuState, sudoku: SudokuField[][]): SudokuField[][]   => state.sudokuContent = sudoku,
   setIsFirst:         (state: SudokuState, isFirst: boolean): boolean                  => state.isFirst       = isFirst, 

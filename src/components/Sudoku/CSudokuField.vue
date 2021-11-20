@@ -94,19 +94,18 @@ export default class CSudokuField extends Vue {}
   flex: 0 0 100%;
 }
 .row, .column {
-  background-color: rgb(0, 10, 20);
-}
-.sameSquare {
-  background-color: rgb(0, 0, 14);
+  border: 1px solid rgb(197, 52, 190);
+  box-shadow: inset 0 0 5px rgb(92, 28, 89);
 }
 .sameContent {
-  color: rgb(0, 0, 8);
-  background-color: #2c3e50;
+  border: 1px solid rgb(216, 105, 210);
+  box-shadow: inset 0 0 15px rgb(201, 134, 197);
 }
 .selected {
   width: 100%;
   height: 100%;
-  background-color: #dddddd;
+  border: 1px solid rgb(255, 255, 255);
+  box-shadow: inset 0 0 10px rgb(233, 233, 233);
 }
 .hidden {
   color: transparent;

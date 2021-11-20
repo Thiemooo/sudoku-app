@@ -38,12 +38,12 @@ import CSelectionBar from './CSelectionBar.vue';
             selectedField.content = numberField.content;
           }
           else {
-            selectedField.wrong  = true;
+            selectedField.wrong   = true;
             selectedField.wrongContent = numberField.content;
           }
         }
       }
-      this.updateSelectedField(selectedField);
+      this.updateSelectedField({ newField: selectedField, onAction: false });
     },
     onActionClick(actionField) {
       const ActionFields = this.getActionFieldIDs;
@@ -53,7 +53,7 @@ import CSelectionBar from './CSelectionBar.vue';
         const selectedField = this.getSelectedField;
         selectedField.wrongContent = 0;
         selectedField.wrong        = false;
-        this.updateSelectedField(selectedField);
+        this.updateSelectedField({ newField: selectedField, onAction: true });
       }
       else if (actionField.fieldID == ActionFields.Notation) {
         console.log(ActionFields.Notation);
@@ -63,7 +63,7 @@ import CSelectionBar from './CSelectionBar.vue';
         console.log(ActionFields.Clear);
         const selectedField = this.getSelectedField;
         selectedField.notations = [];
-        this.updateSelectedField(selectedField);
+        this.updateSelectedField({ newField: selectedField, onAction: true });        
       }
       else if (actionField.fieldID == ActionFields.Undo) {
         console.log(ActionFields.Undo + ' is calling undoStep!');
@@ -91,13 +91,13 @@ export default class CSudoku extends Vue {}
   flex-direction: row;
 }
 .sudoku {
-  width: 50rem;
-  height: 50rem;
+  width: 55rem;
+  height: 55rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-row-gap: 5px;
-  grid-column-gap: 5px;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
   user-select: none;
 }
 </style>

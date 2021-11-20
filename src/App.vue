@@ -25,7 +25,6 @@ import CContent from './components/Sudoku/CContent.vue';
     startSudoku() {
       this.createSudoku();
       this.setIfIsFirst(false);
-      this.hideSudoku();
     },
   },
   computed: {
@@ -52,8 +51,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  // color: #2c3e50;
+  color: #af4e9a;
   margin-top: 3rem;
+  transform: scale(0.8);
 }
 .button-container button {
   margin-left: 3rem;
