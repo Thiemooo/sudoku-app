@@ -1,5 +1,5 @@
 <template>
-  <div class="sudoku-field" @click="fieldClick" :style="{'--width': width}">
+  <div class="sudoku-field" @click="fieldClick">
     <div class="notations" v-if="field.hidden">
       <span v-for="notation in getNotations" 
             :key="notation"
@@ -29,7 +29,6 @@ import { Component, Vue } from 'vue-property-decorator';
   props: [
     'field',
     'selected',
-    'width'
   ],
   methods: {
     fieldClick() {

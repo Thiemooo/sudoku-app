@@ -58,7 +58,7 @@ function solve(sudoku: number[][]): number[][][] {
   return allSolutions;
 }
 
-async function createBoilerplate(): Promise<number[][]> {
+async function createBoilerplate(difficulty: string): Promise<number[][]> {
   // const example = [
   //   [5, 3, 0,   0, 7, 0,   0, 0, 0],
   //   [0, 0, 0,   1, 9, 5,   0, 0, 0],
@@ -73,7 +73,7 @@ async function createBoilerplate(): Promise<number[][]> {
   //   [0, 0, 0,   0, 8, 0,   0, 7, 9],
   // ];
   
-  const res = await fetch(`https://sugoku.herokuapp.com/board?difficulty=easy`);
+  const res = await fetch(`https://sugoku.herokuapp.com/board?difficulty=${difficulty}`);
   const sudoku = await res.json();
   return sudoku.board;
 }

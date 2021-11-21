@@ -1,10 +1,10 @@
 <template>
-  <div class="sudoku-container">
+  <div class="sudoku-container" v-if="!getIfFirst">
     <div class="selection-bar-container">
       <c-selection-bar    v-if="!getIfFirst" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
       <c-selection-bar    v-if="!getIfFirst" :content="getActionFields" @onSelectionBarClick="onActionClick"></c-selection-bar>
     </div>
-    <div class="sudoku" v-if="!getIfFirst">
+    <div class="sudoku">
       <c-sudoku-square  v-for="sC in this.getContent" 
                         :key="getContent.indexOf(sC)+1"
                         :squareID="getContent.indexOf(sC)+1" 

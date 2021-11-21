@@ -126,7 +126,7 @@ const getters = {
 };
 /*=================================================================*/
 const actions = {
-  async createSudoku       ({ commit }: {commit: Commit}): Promise<void> {
+  async createSudoku       ({ commit }: {commit: Commit}, difficulty = 'easy'): Promise<void> {
     const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const sudoku:       SudokuField[][]  = new Array(9);
     const sudokuContent: number[][]      = new Array(9);
@@ -195,7 +195,7 @@ const actions = {
 
     
     // Computing Sudoku (API)
-    const boilerPlate = await createBoilerplate();
+    const boilerPlate = await createBoilerplate(difficulty);
     console.log(boilerPlate);
     const allSolutions = solve(boilerPlate);
     console.log(allSolutions.length + " possibilities.");
@@ -245,7 +245,7 @@ const actions = {
     commit('setNotations', pseudoNumbers);
     commit('setNumberFields', numberFields);
     commit('setActionFields', actionFields);
-
+    commit('setIsFirst', false);
     // Create sudoku and selection fields
     // const numbers                        = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     // const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];

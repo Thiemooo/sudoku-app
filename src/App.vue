@@ -23,10 +23,9 @@ import CContent from './components/Sudoku/CContent.vue';
     CContent,
   },
   methods: {
-    ...mapActions(['createSudoku', 'hideSudoku', 'setIfIsFirst']),
+    ...mapActions(['createSudoku', 'hideSudoku']),
     startSudoku() {
       this.createSudoku();
-      this.setIfIsFirst(false);
     },
   },
   computed: {
