@@ -49,5 +49,8 @@ export default class CSudokuSquare extends Vue {}
   grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 5px;
   grid-column-gap: 5px;
+  border-radius: 3px;
+  border: 1px solid rgb(153, 146, 179);
+  box-shadow: inset 0 0 7px rgb(153, 146, 179), 0 0 7px rgb(153, 146, 179) ;
 }
 </style>
