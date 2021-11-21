@@ -1,8 +1,8 @@
 <template>
-  <div class="sudoku-container" v-if="!getIfFirst">
+  <div class="sudoku-container">
     <div class="selection-bar-container">
-      <c-selection-bar    v-if="!getIfFirst" :content="getNumberFields" @onSelectionBarClick="fillInContent"></c-selection-bar>
-      <c-selection-bar    v-if="!getIfFirst" :content="getActionFields" @onSelectionBarClick="onActionClick"></c-selection-bar>
+      <c-selection-bar :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
+      <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
     </div>
     <div class="sudoku">
       <c-sudoku-square  v-for="sC in this.getContent" 
@@ -26,53 +26,89 @@ import CSelectionBar from './CSelectionBar.vue';
     CSelectionBar,
   },
   methods: {
-    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep']),
-    fillInContent(numberField) { 
+    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown']),
+    onNumberFieldClick(numberField) {
+      this.fillInContent(numberField.content);
+    },
+    fillInContent(content) {
       const selectedField = this.getSelectedField;
       if (selectedField.hidden) {
-        if (this.getIfIsNoting) this.changeNotations({ field: selectedField, notation: numberField.content.toString() });
+        if (this.getIfIsNoting) this.changeNotations({ field: selectedField, notation: content.toString() });
         else {
-          if (selectedField.possibleContents.indexOf(numberField.content) != -1) {
+          if (selectedField.possibleContents.indexOf(content) != -1) {
             selectedField.hidden  = false;
             selectedField.wrong   = false;
-            selectedField.content = numberField.content;
+            selectedField.content = content;
           }
           else {
             selectedField.wrong   = true;
-            selectedField.wrongContent = numberField.content;
+            selectedField.wrongContent = content;
           }
         }
       }
       this.updateSelectedField({ newField: selectedField, onAction: false });
     },
-    onActionClick(actionField) {
+    onActionFieldClick(actionField) {
+      this.action(actionField.fieldID)
+    },
+    action(actionID) {
       const ActionFields = this.getActionFieldIDs;
       
-      if (actionField.fieldID == ActionFields.Delete) {
-        console.log(ActionFields.Delete);
+      if (actionID == ActionFields.Delete) {
         const selectedField = this.getSelectedField;
+        if (!selectedField.wrong) return;
+        console.log(ActionFields.Delete);
         selectedField.wrongContent = 0;
         selectedField.wrong        = false;
         this.updateSelectedField({ newField: selectedField, onAction: true });
       }
-      else if (actionField.fieldID == ActionFields.Notation) {
+      else if (actionID == ActionFields.Notation) {
         console.log(ActionFields.Notation);
         this.switchIfIsNoting();
       }
-      else if (actionField.fieldID == ActionFields.Clear) {
+      else if (actionID == ActionFields.Clear) {
         console.log(ActionFields.Clear);
         const selectedField = this.getSelectedField;
         selectedField.notations = [];
         this.updateSelectedField({ newField: selectedField, onAction: true });        
       }
-      else if (actionField.fieldID == ActionFields.Undo) {
-        console.log(ActionFields.Undo + ' is calling undoStep!');
+      else if (actionID == ActionFields.Undo) {
         this.undoStep();
       }
-    }
+    },
+    onWindowKeyDown(e) {
+      if (e.keyCode >= 37 && e.keyCode <= 40) this.onArrowKeyDown(e.key);
+      else if (e.key == 'Delete') if (e.shiftKey) this.action(this.getActionFieldIDs.Clear); else this.action(this.getActionFieldIDs.Delete);
+      else if (e.code == 'ShiftRight') this.switchIfIsNoting();
+    },
+    onWindowKeyPress(e) {
+      const Key = e.key;
+      if (Key == "\u001a") {
+        // If Ctrl + Z
+        this.undoStep();
+        return;
+      }
+
+      const numberKey = Number.parseInt(e.code.split("Digit")[1]);
+      if (!isNaN(numberKey)) {
+        // If input is a number
+        if (numberKey != 0) {
+          if (e.shiftKey) this.changeNotations({ field: this.getSelectedField, notation: numberKey.toString() });
+          else this.fillInContent(numberKey);
+        }
+      }
+    },
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getIfFirst', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps']),
+  },
+  created() {
+    window.addEventListener('keydown', this.onWindowKeyDown );
+    window.addEventListener('keypress', this.onWindowKeyPress);
+  },
+  destroyed() {
+    window.removeEventListener('keydown', this.onWindowKeyDown );
+    window.removeEventListener('keypress', this.onWindowKeyPress);
   },
 })
 export default class CSudoku extends Vue {}

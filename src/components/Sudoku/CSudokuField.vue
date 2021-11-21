@@ -4,7 +4,7 @@
       <span v-for="notation in getNotations" 
             :key="notation"
             :class="{
-              hidden: !field.notations.includes(notation) || (squareContains(notation) || rowContains(notation) || columnContains(notation)), 
+              hidden: !field.notations.includes(notation) //|| (squareContains(notation) || rowContains(notation) || columnContains(notation)), 
             }"
       >{{ notation }}
       </span>

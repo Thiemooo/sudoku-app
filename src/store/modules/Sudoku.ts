@@ -3,6 +3,7 @@ import { SudokuField, forEachSudokuField/*, shuffleArray*/ } from './helpers';
 import { FieldTypes } from './FieldInfo';
 import LinkedList, { LinkedListNode } from './LinkedList';
 import { solve, createBoilerplate } from './SudokuSolver';
+import Time from './Time';
 
 /*=================================================================*/
 type SudokuState = typeof state;
@@ -29,17 +30,19 @@ const fallbackField: SudokuField = {
 };
 /*=================================================================*/
 const state: {
-  allSolutions:    number[][][];
-  boilerplate:     number[][];
-  sudokuContent:   SudokuField[][];
-  numberFields:    SudokuField[];
-  actionFields:    SudokuField[];
-  selectedField:   SudokuField;
-  isFirst:         boolean;
-  isNoting:        boolean;
-  notations:       string[];
-  ActionFieldIDs:  ActionFieldIDs;
-  steps:           LinkedList;
+  allSolutions:   number[][][];
+  boilerplate:    number[][];
+  sudokuContent:  SudokuField[][];
+  numberFields:   SudokuField[];
+  actionFields:   SudokuField[];
+  selectedField:  SudokuField;
+  isShowing:      boolean;
+  isNoting:       boolean;
+  notations:      string[];
+  ActionFieldIDs: ActionFieldIDs;
+  steps:          LinkedList;
+  time:           Time;
+  finished:       boolean;
 } = {
   allSolutions: [],
   boilerplate: [],
@@ -101,7 +104,7 @@ const state: {
       notations: [],
     }
   ],
-  isFirst: true,
+  isShowing: false,
   isNoting: false,
   notations: [],
   ActionFieldIDs: {
@@ -111,11 +114,13 @@ const state: {
     Clear: '',
   },
   steps: new LinkedList(),
+  time: new Time(),
+  finished: false,
 };
 /*=================================================================*/
 const getters = {
   getContent:         (state: SudokuState): SudokuField[][] => state.sudokuContent,
-  getIfFirst:         (state: SudokuState): boolean         => state.isFirst,
+  getIfShowing:       (state: SudokuState): boolean         => state.isShowing,
   getSelectedField:   (state: SudokuState): SudokuField     => state.selectedField,
   getNumberFields:    (state: SudokuState): SudokuField[]   => state.numberFields,
   getActionFields:    (state: SudokuState): SudokuField[]   => state.actionFields,
@@ -123,6 +128,7 @@ const getters = {
   getNotations:       (state: SudokuState): string[]        => state.notations,
   getActionFieldIDs:  (state: SudokuState): ActionFieldIDs  => state.ActionFieldIDs,
   getSteps:           (state: SudokuState): LinkedList      => state.steps,
+  getTime:            (state: SudokuState): Time            => state.time,
 };
 /*=================================================================*/
 const actions = {
@@ -238,14 +244,19 @@ const actions = {
       }
     }
 
-    // console.log(allSolutions);
+    console.log(allSolutions);
+
+    state.time.stop();
+    state.time.resume();
 
     commit('setSudoku', sudoku);
     commit('setBoilerplate', boilerPlate);
     commit('setNotations', pseudoNumbers);
     commit('setNumberFields', numberFields);
     commit('setActionFields', actionFields);
-    commit('setIsFirst', false);
+    commit('setShow', true);
+    commit('setFinished', false);
+    commit('setSelectedField', fallbackField);
     // Create sudoku and selection fields
     // const numbers                        = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     // const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -336,8 +347,8 @@ const actions = {
     // commit('setActionFields', actionFields);
   },
   /*---------------------------------*/
-  setIfIsFirst       ({ commit }: {commit: Commit}, isFirst: boolean): void {
-    commit('setIsFirst', isFirst);
+  show               ({ commit }: {commit: Commit}, show = true): void {
+    commit('setShow', show);
   },
   /*---------------------------------*/
   selectField        ({ commit }: {commit: Commit}, selectedField: SudokuField): void {
@@ -345,8 +356,44 @@ const actions = {
     else commit('setSelectedField', selectedField);
   },
   /*---------------------------------*/
-  updateSelectedField({ commit }: {commit: Commit }, data: { newField: SudokuField, onAction: boolean }): void {
+  onArrowKeyDown     ({ commit }: {commit: Commit}, key: string): void {
+    let selectedField    = state.selectedField;
     
+    if ((selectedField.row    == 1 && key == 'ArrowUp')   ||
+        (selectedField.row    == 9 && key == 'ArrowDown') ||
+        (selectedField.column == 1 && key == 'ArrowLeft') ||
+        (selectedField.column == 9 && key == 'ArrowRight')  ) {
+      // If trying to go out of Sudoku
+      return;
+    }
+
+    let rowAdd = 0;
+    let colAdd = 0;
+
+    switch (key) {
+      case 'ArrowLeft':  colAdd = -1; break;
+      case 'ArrowUp':    rowAdd = -1; break;
+      case 'ArrowRight': colAdd =  1; break;
+      case 'ArrowDown':  rowAdd =  1; break;
+    }
+    
+    const newRow = selectedField.row    + rowAdd;
+    const newCol = selectedField.column + colAdd;
+
+    const sudoku = forEachSudokuField(state.sudokuContent, (cF) => {
+      if (cF.row == newRow && cF.column == newCol) {
+        selectedField = cF;
+      }
+    });
+
+    commit('setSelectedField', selectedField); 
+  },
+  /*---------------------------------*/
+  updateSelectedField({ commit }: {commit: Commit }, data: { newField: SudokuField, onAction: boolean }): void {
+    if (state.finished) {
+      console.log("Finished the sudoku in " + state.time.minutes().toString() + " minutes and " + (state.time.seconds()%60).toString() + " seconds! Great job!");
+      return;
+    }
     // If no field selected: return
     if (data.newField.fieldID == fallbackField.fieldID) return;
     
@@ -399,10 +446,19 @@ const actions = {
       
       commit('setSudoku', newSudoku);
     }
+
+    let finished = true;
+    forEachSudokuField(newSudoku, (cF) => {
+      if (cF.hidden) finished = false;
+    });
+    if (finished) {
+      state.time.pause();
+      commit('setFinished', true);
+    }
   },
   /*---------------------------------*/
   switchIfIsNoting   ({ commit }: {commit: Commit}): void {
-    commit('setIfIsNoting');
+    commit('switchNoting');
   },
   /*---------------------------------*/
   changeNotations    ({ commit }: {commit: Commit}, info : { field: SudokuField, notation: string }): void {
@@ -445,12 +501,12 @@ const actions = {
 const mutations = {
   setBoilerplate:     (state: SudokuState, boilerplate: number[][]): number[][]        => state.boilerplate   = boilerplate,
   setSudoku:          (state: SudokuState, sudoku: SudokuField[][]): SudokuField[][]   => state.sudokuContent = sudoku,
-  setIsFirst:         (state: SudokuState, isFirst: boolean): boolean                  => state.isFirst       = isFirst, 
+  setShow:            (state: SudokuState, show: boolean): boolean                     => state.isShowing     = show, 
   setSelectedField:   (state: SudokuState, selectedField: SudokuField): SudokuField    => state.selectedField = selectedField,
   setNumberFields:    (state: SudokuState, numberFields: SudokuField[]): SudokuField[] => state.numberFields  = numberFields,
   setActionFields:    (state: SudokuState, actionFields: SudokuField[]): SudokuField[] => state.actionFields  = actionFields,
   setNotations:       (state: SudokuState, notations: string[]): string[]              => state.notations     = notations, 
-  setIfIsNoting:      (state: SudokuState): boolean                                    => state.isNoting      = !state.isNoting,
+  switchNoting:       (state: SudokuState): boolean                                    => state.isNoting      = !state.isNoting,
   setUndoID:          (state: SudokuState, undoID: string): string                     => state.ActionFieldIDs.Undo = undoID,
   setDeleteID:        (state: SudokuState, deleteID: string): string                   => state.ActionFieldIDs.Delete = deleteID,
   setNotationID:      (state: SudokuState, notationID: string): string                 => state.ActionFieldIDs.Notation = notationID,
@@ -458,6 +514,7 @@ const mutations = {
   insertStep:         (state: SudokuState, newStep: LinkedListNode): LinkedList        => state.steps.insert(newStep),
   popStep:            (state: SudokuState): LinkedList                                 => state.steps.pop(),
   deleteSteps:        (state: SudokuState, id: string): LinkedList                     => state.steps.delete(id),
+  setFinished:        (state: SudokuState, finished: boolean): boolean                 => state.finished      = finished,  
 }
 /*=================================================================*/
 export default {
