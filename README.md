@@ -1,7 +1,7 @@
 # Sudoku-Web-App
 
 ## Description
-This **Sudoku-Web-App** generates a Sudoku[^1], which can be solved by *you*!
+This **Sudoku-Web-App** generates a Sudoku[^1], which can be solved by *you*! <br>
 One Sudoku can have multiple solutions, but every possible solution is taken into consideration when you are solving it.
 ### Have fun! 
 <br />
