@@ -204,7 +204,7 @@ const actions = {
     const boilerPlate = await createBoilerplate(difficulty);
     console.log(boilerPlate);
     const allSolutions = solve(boilerPlate);
-    console.log(allSolutions.length + " possibilities.");
+    console.log(allSolutions.length + " possible solutions.");
 
     // Setting up Sudoku for website
     for (let square = 0; square < 9; square++) {
@@ -244,7 +244,7 @@ const actions = {
       }
     }
 
-    console.log(allSolutions);
+    // console.log(allSolutions);
 
     state.time.stop();
     state.time.resume();
