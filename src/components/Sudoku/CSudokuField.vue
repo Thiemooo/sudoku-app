@@ -1,5 +1,13 @@
 <template>
-  <div class="sudoku-field" @click="fieldClick">
+  <div class="sudoku-field" 
+      :class="{
+        'sudoku-field': true,
+        'selected': this.selected,
+        'selectedIncorrect': this.selected && this.field.wrong,
+        'incorrect': !this.selected && this.field.wrong,
+      }"
+
+      @click="fieldClick" :style="{'--width': width}">
     <div class="notations" v-if="field.hidden">
       <span v-for="notation in getNotations" 
             :key="notation"
@@ -9,14 +17,11 @@
       >{{ notation }}
       </span>
     </div>
-    <div v-if="!this.field.wrong" :class="{selected: this.selected}">
+    <div v-if="!this.field.wrong">
       {{ this.field.hidden ? '?' : this.field.content }}
     </div>
-    <div v-else :class="{
-                  selectedIncorrect: this.selected,
-                  incorrect: !this.selected
-                }"
-    >{{ this.field.wrongContent }}
+    <div v-else>
+      {{ this.field.wrongContent }}
     </div>
   </div>
 </template>
@@ -29,6 +34,7 @@ import { Component, Vue } from 'vue-property-decorator';
   props: [
     'field',
     'selected',
+    'width'
   ],
   methods: {
     fieldClick() {
@@ -91,8 +97,8 @@ export default class CSudokuField extends Vue {}
   align-items: center;
   flex: 0 0 100%;
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: var(--width);
+  height: var(--width);
 }
 .row, .column {
   border: 1px solid rgb(197, 52, 190);
@@ -103,8 +109,6 @@ export default class CSudokuField extends Vue {}
   box-shadow: inset 0 0 15px rgb(201, 134, 197);
 }
 .selected {
-  width: 100%;
-  height: 100%;
   border: 1px solid rgb(255, 255, 255);
   box-shadow: inset 0 0 10px rgb(233, 233, 233);
 }
@@ -112,35 +116,44 @@ export default class CSudokuField extends Vue {}
   color: transparent;
 }
 .selectedIncorrect {
-  width: 100%;
-  height: 100%;
   background-color: #dd6565;
   color: rgb(0, 0, 8);
 }
 .incorrect {
-  width: 100%;
-  height: 100%;
-  // background-color: #8f2525;
   background-color: #830000;
   color: rgb(0, 0, 8);
 }
 .numberField, .actionField {
   transition: background-color 0.2s, color 0.2s;
+
+  &:active {
+    color: white;
+  }
+
+  &:hover  {
+    color: rgb(0, 0, 8);
+    background-color: #af4e9a;
+  }
 }
-.numberField:hover, .actionField:hover, .active {
+.active {
   color: rgb(0, 0, 8);
   background-color: #af4e9a;
 }
-.numberField:active, .actionField:active {
-  color: white;
-}
 .notations {
   position: absolute;
+  width: var(--width);
+  height: var(--width);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-column-gap: 15px;
-  color: rgb(94, 94, 94);
-  font-size: 1.25rem;
+  color: rgb(119, 119, 119);
+  font-size: 0.7rem;
+  font-weight: bolder;
+  
+  & span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

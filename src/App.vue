@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="header">
+      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
       <div id="timer" class="timer">
         {{ this.getTime.toString() }}
       </div>
-      <div class="button-container">
-        <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
-      </div>
-      <c-sudoku v-if="getIfShowing"></c-sudoku>
     </div>
+    <c-sudoku v-if="getIfShowing"></c-sudoku>
   </div>
 </template>
 
@@ -17,13 +15,11 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapActions, mapGetters } from 'vuex';
 import CSudoku from './components/Sudoku/CSudoku.vue';
 import CButton from './components/Utility/CButton.vue';
-import CContent from './components/Sudoku/CContent.vue';
 
 @Component({
   components: {
     CSudoku,
     CButton,
-    CContent,
   },
   methods: {
     ...mapActions(['createSudoku', 'show']),
@@ -63,25 +59,23 @@ body {
   text-align: center;
   color: #af4e9a;
   height: 100%;
-}
-.timer {
-  position: absolute;
-  font-family: 'Major Mono Display';
-  top: 1rem;
-  right: 1.5rem;
-  font-size: 3rem;
-  color: white;
-}
-.button-container button {
-  margin-left: 3rem;
-  margin-right: 3rem;
-}
-.container {
-  height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: top;
   align-items: center;
+}
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 2rem;
+}
+.header > * {
+  margin-left: 2rem;
+}
+.timer {
+  font-family: 'Major Mono Display';
+  font-size: 2pc;
+  color: white;
 }
 </style>

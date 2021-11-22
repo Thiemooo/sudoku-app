@@ -23,6 +23,10 @@ function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuF
   return sudoku;
 }
 /*=================================================================*/
+function fieldWidth(): string {
+  return '50px';
+}
+/*=================================================================*/
 // function shuffleArray(arr: number[] | string[]) {
 //   let currentIndex = arr.length,  randomIndex;
 
@@ -43,6 +47,7 @@ function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuF
 /*=================================================================*/
 export {
   forEachSudokuField,
+  fieldWidth,
   // shuffleArray
 }
 /*=================================================================*/

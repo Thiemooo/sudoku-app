@@ -1,7 +1,7 @@
 <template>
   <div class="sudoku-container">
-    <div class="selection-bar-container">
-      <c-selection-bar :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
+    <div class="selection-bar-container" :style="{'--sHeight': getHeight() }">
+      <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
       <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
     </div>
     <div class="sudoku">
@@ -77,11 +77,17 @@ import CSelectionBar from './CSelectionBar.vue';
       }
     },
     onWindowKeyDown(e) {
+      if (this.getSelectedField.data == 'FALLBACK-FIELD') return;
+      // If no field selected: return
+      
       if (e.keyCode >= 37 && e.keyCode <= 40) this.onArrowKeyDown(e.key);
       else if (e.key == 'Delete') if (e.shiftKey) this.action(this.getActionFieldIDs.Clear); else this.action(this.getActionFieldIDs.Delete);
       else if (e.code == 'ShiftRight') this.switchIfIsNoting();
     },
     onWindowKeyPress(e) {
+      if (this.getSelectedField.data == 'FALLBACK-FIELD') return;
+      // If no field selected: return
+      
       const Key = e.key;
       if (Key == "\u001a") {
         // If Ctrl + Z
@@ -98,9 +104,12 @@ import CSelectionBar from './CSelectionBar.vue';
         }
       }
     },
+    getHeight() {
+      return '506px';
+    },
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );
@@ -123,12 +132,13 @@ export default class CSudoku extends Vue {}
 }
 .selection-bar-container {
   width: 25%;
+  height: var(--sHeight);
   display: flex;
   justify-content: space-evenly;
 }
 .sudoku {
-  width:  50rem;
-  height: 50rem;
+  width:  fit-content;
+  height: fit-content;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);

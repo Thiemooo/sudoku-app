@@ -1,5 +1,5 @@
 import { Commit, Dispatch } from 'vuex';
-import { SudokuField, forEachSudokuField/*, shuffleArray*/ } from './helpers';
+import { SudokuField, forEachSudokuField/*, shuffleArray*/, fieldWidth } from './helpers';
 import { FieldTypes } from './FieldInfo';
 import LinkedList, { LinkedListNode } from './LinkedList';
 import { solve, createBoilerplate } from './SudokuSolver';
@@ -129,6 +129,7 @@ const getters = {
   getActionFieldIDs:  (state: SudokuState): ActionFieldIDs  => state.ActionFieldIDs,
   getSteps:           (state: SudokuState): LinkedList      => state.steps,
   getTime:            (state: SudokuState): Time            => state.time,
+  getFieldWidth:      (): string                            => fieldWidth(),
 };
 /*=================================================================*/
 const actions = {

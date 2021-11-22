@@ -12,6 +12,7 @@
                       sameSquare: fC.square == getSelectedField.square,
                     }"
                     @onFieldClick="onSelectField"
+                    :width="getFieldWidth"
     ></c-sudoku-field>
   </div>
 </template>
@@ -30,7 +31,7 @@ import CSudokuField from './CSudokuField.vue';
     'squareID',
   ],
   computed: {
-    ...mapGetters(['getSelectedField']),
+    ...mapGetters(['getSelectedField', 'getFieldWidth']),
   },
   methods: {
     ...mapActions(['selectField']),
@@ -51,6 +52,8 @@ export default class CSudokuSquare extends Vue {}
   grid-column-gap: 5px;
   border-radius: 3px;
   border: 1px solid rgb(153, 146, 179);
-  box-shadow: inset 0 0 7px rgb(153, 146, 179), 0 0 7px rgb(153, 146, 179) ;
+  box-shadow: inset 0 0 7px rgb(153, 146, 179), 0 0 7px rgb(153, 146, 179);
+  width: fit-content;
+  height: fit-content;
 }
 </style>
