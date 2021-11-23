@@ -1,10 +1,10 @@
 <template>
   <div class="sudoku-container">
-    <div class="selection-bar-container" :style="{'--sHeight': getHeight() }">
+    <div class="selection-bar-container" :style="{'--sHeight': getSudokuHeight }">
       <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
       <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
     </div>
-    <div class="sudoku">
+    <div ref="sudoku" id="sudoku" class="sudoku">
       <c-sudoku-square  v-for="sC in this.getContent" 
                         :key="getContent.indexOf(sC)+1"
                         :squareID="getContent.indexOf(sC)+1" 
@@ -26,7 +26,7 @@ import CSelectionBar from './CSelectionBar.vue';
     CSelectionBar,
   },
   methods: {
-    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown']),
+    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown', 'setSudokuHeight', 'refreshSize']),
     onNumberFieldClick(numberField) {
       this.fillInContent(numberField.content);
     },
@@ -104,31 +104,39 @@ import CSelectionBar from './CSelectionBar.vue';
         }
       }
     },
-    getHeight() {
-      return '506px';
-    },
+    onWindowResize() {
+      this.refreshSize(this.$refs.sudoku.clientHeight);
+    }
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );
     window.addEventListener('keypress', this.onWindowKeyPress);
+    window.addEventListener('resize', this.onWindowResize);
   },
   destroyed() {
     window.removeEventListener('keydown', this.onWindowKeyDown );
     window.removeEventListener('keypress', this.onWindowKeyPress);
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+  mounted() {
+    this.refreshSize(this.$refs.sudoku.clientHeight);
+    setTimeout(() => {
+      this.refreshSize(this.$refs.sudoku.clientHeight);
+    }, 10);
   },
 })
 export default class CSudoku extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .sudoku-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: fit-content;
 }
 .selection-bar-container {
   width: 25%;

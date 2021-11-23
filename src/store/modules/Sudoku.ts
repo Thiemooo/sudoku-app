@@ -1,5 +1,5 @@
 import { Commit, Dispatch } from 'vuex';
-import { SudokuField, forEachSudokuField/*, shuffleArray*/, fieldWidth } from './helpers';
+import { SudokuField, forEachSudokuField/*, shuffleArray*/, calcFieldWidth } from './helpers';
 import { FieldTypes } from './FieldInfo';
 import LinkedList, { LinkedListNode } from './LinkedList';
 import { solve, createBoilerplate } from './SudokuSolver';
@@ -43,6 +43,8 @@ const state: {
   steps:          LinkedList;
   time:           Time;
   finished:       boolean;
+  fieldWidth:     string;
+  height:         string;
 } = {
   allSolutions: [],
   boilerplate: [],
@@ -116,6 +118,8 @@ const state: {
   steps: new LinkedList(),
   time: new Time(),
   finished: false,
+  fieldWidth: '50', 
+  height: '650px',
 };
 /*=================================================================*/
 const getters = {
@@ -129,7 +133,8 @@ const getters = {
   getActionFieldIDs:  (state: SudokuState): ActionFieldIDs  => state.ActionFieldIDs,
   getSteps:           (state: SudokuState): LinkedList      => state.steps,
   getTime:            (state: SudokuState): Time            => state.time,
-  getFieldWidth:      (): string                            => fieldWidth(),
+  getFieldWidth:      (state: SudokuState): string          => state.fieldWidth,
+  getSudokuHeight:    (): string                            => state.height,
 };
 /*=================================================================*/
 const actions = {
@@ -497,6 +502,10 @@ const actions = {
     commit('setSudoku', newSudoku);                                                     // Update the Sudoku for re-rendering
   },
   /*---------------------------------*/
+  refreshSize        ({ commit }: {commit: Commit}, sHeight: number): void {
+    commit('setFieldWidth', calcFieldWidth());
+    commit('setHeight',     `${sHeight}px`);
+  },
 };
 /*=================================================================*/
 const mutations = {
@@ -516,6 +525,8 @@ const mutations = {
   popStep:            (state: SudokuState): LinkedList                                 => state.steps.pop(),
   deleteSteps:        (state: SudokuState, id: string): LinkedList                     => state.steps.delete(id),
   setFinished:        (state: SudokuState, finished: boolean): boolean                 => state.finished      = finished,  
+  setFieldWidth:      (state: SudokuState, width: string): string                      => state.fieldWidth    = width, 
+  setHeight:          (state: SudokuState, height: string): string                     => state.height        = height,
 }
 /*=================================================================*/
 export default {

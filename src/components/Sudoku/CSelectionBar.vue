@@ -1,5 +1,5 @@
 <template>
-  <div class="selection-bar" :style="{'--count': content.length}">
+  <div class="selection-bar" :style="{'--fieldWidth': fieldWidth}">
     <c-sudoku-field v-for="nF in content" 
                     :key="nF.number"
                     :field="nF"
@@ -41,13 +41,9 @@ import CSudokuField from './CSudokuField.vue';
 export default class CSelectionBar extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .selection-bar {
   display: grid;
-  // flex-direction: column;
-
-  & div {
-    border: 1px solid rgb(153, 146, 179);
-  }
+  grid-row-gap: calc(50px/9);
 }
 </style>

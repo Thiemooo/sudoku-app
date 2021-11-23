@@ -23,8 +23,12 @@ function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuF
   return sudoku;
 }
 /*=================================================================*/
-function fieldWidth(): string {
-  return '50px';
+function calcFieldWidth(): string {
+  const innerW = window.innerWidth;
+  // if (innerW > 850) {
+
+  // }
+  return `${innerW/13}px`;
 }
 /*=================================================================*/
 // function shuffleArray(arr: number[] | string[]) {
@@ -47,7 +51,7 @@ function fieldWidth(): string {
 /*=================================================================*/
 export {
   forEachSudokuField,
-  fieldWidth,
+  calcFieldWidth,
   // shuffleArray
 }
 /*=================================================================*/
