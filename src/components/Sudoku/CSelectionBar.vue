@@ -1,5 +1,5 @@
 <template>
-  <div class="selection-bar" :style="{'--fieldWidth': fieldWidth}">
+  <div class="selection-bar" :style="{'--count': content.length, '--fieldWidth': fieldWidth}">
     <c-sudoku-field v-for="nF in content" 
                     :key="nF.number"
                     :field="nF"
@@ -45,5 +45,13 @@ export default class CSelectionBar extends Vue {}
 .selection-bar {
   display: grid;
   grid-row-gap: calc(50px/9);
+}
+
+@media only screen and (max-width: 500px) {
+  .selection-bar {
+    grid-template-columns: repeat(var(--count), 1fr);
+    grid-column-gap: calc(50px/9);
+    padding-top: 10px;
+  }
 }
 </style>

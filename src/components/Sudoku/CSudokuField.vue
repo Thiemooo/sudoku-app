@@ -156,4 +156,10 @@ export default class CSudokuField extends Vue {}
     align-items: center;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .sudoku-field {
+    font-size: 2rem;
+  }
+}
 </style>

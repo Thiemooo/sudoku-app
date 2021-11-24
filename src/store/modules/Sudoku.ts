@@ -134,7 +134,7 @@ const getters = {
   getSteps:           (state: SudokuState): LinkedList      => state.steps,
   getTime:            (state: SudokuState): Time            => state.time,
   getFieldWidth:      (state: SudokuState): string          => state.fieldWidth,
-  getSudokuHeight:    (): string                            => state.height,
+  getSudokuHeight:    (state: SudokuState): string          => state.height,
 };
 /*=================================================================*/
 const actions = {
@@ -386,7 +386,7 @@ const actions = {
     const newRow = selectedField.row    + rowAdd;
     const newCol = selectedField.column + colAdd;
 
-    const sudoku = forEachSudokuField(state.sudokuContent, (cF) => {
+    forEachSudokuField(state.sudokuContent, (cF) => {
       if (cF.row == newRow && cF.column == newCol) {
         selectedField = cF;
       }

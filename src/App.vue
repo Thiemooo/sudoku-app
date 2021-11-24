@@ -78,4 +78,15 @@ body {
   font-size: 2pc;
   color: white;
 }
+
+@media only screen and (max-width: 500px) {
+  body {
+    padding: 10px;
+  }
+}
+@media only screen and (max-height: 400px) {
+  body {
+    overflow-y: scroll;
+  }
+}
 </style>

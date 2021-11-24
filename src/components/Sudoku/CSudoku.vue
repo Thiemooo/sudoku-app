@@ -106,7 +106,7 @@ import CSelectionBar from './CSelectionBar.vue';
     },
     onWindowResize() {
       this.refreshSize(this.$refs.sudoku.clientHeight);
-    }
+    },
   },
   computed: {
     ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight']),
@@ -123,10 +123,19 @@ import CSelectionBar from './CSelectionBar.vue';
   },
   mounted() {
     this.refreshSize(this.$refs.sudoku.clientHeight);
-    setTimeout(() => {
-      this.refreshSize(this.$refs.sudoku.clientHeight);
-    }, 10);
   },
+  watch: {
+    getFieldWidth: function() {
+      setTimeout(() => {
+        this.refreshSize(this.$refs.sudoku.clientHeight);
+        console.clear();
+        console.log('Height: ' + window.innerHeight);
+        console.log('Width: '  + window.innerWidth);
+        console.log(window.innerHeight / window.innerWidth);
+        console.log(this.getFieldWidth);
+      }, 10);
+    } 
+  }
 })
 export default class CSudoku extends Vue {}
 </script>
@@ -136,6 +145,7 @@ export default class CSudoku extends Vue {}
   display: flex;
   justify-content: center;
   width: 100%;
+  align-items: center;
   height: fit-content;
 }
 .selection-bar-container {
@@ -152,5 +162,16 @@ export default class CSudoku extends Vue {}
   grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 10px;
   grid-column-gap: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+  .sudoku-container {
+    flex-direction: column-reverse;
+  }
+  .selection-bar-container {
+    flex-direction: column;
+    height: 25%;
+    width: var(--sHeight);
+  }
 }
 </style>
