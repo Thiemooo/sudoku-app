@@ -81,6 +81,7 @@ body {
 
 @media only screen and (max-width: 500px) {
   body {
+    overflow-y: scroll;
     padding: 10px;
   }
 }
