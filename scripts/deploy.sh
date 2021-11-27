@@ -13,7 +13,7 @@ cd dist
 
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m 'Deploy Sudoku-App 🍪'
 
 git push -f "$PUSH_URL" master:gh-pages
 
