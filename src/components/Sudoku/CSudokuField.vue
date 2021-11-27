@@ -101,12 +101,12 @@ export default class CSudokuField extends Vue {}
   height: var(--width);
 
   &.disabled {
-  color: rgba($color: #af4e9a, $alpha: 0.2);
-  border: 1px solid rgba($color: #9992b3, $alpha: 0.2);
+  color: rgba($color: #af4e9a, $alpha: 0.4);
+  border: 1px solid rgba($color: #9992b3, $alpha: 0.4);
   cursor: default;
 
   &:hover {
-    color: rgba($color: #af4e9a, $alpha: 0.2);
+    color: rgba($color: #af4e9a, $alpha: 0.4);
     background: rgb(0, 0, 8);
   }
 }

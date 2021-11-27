@@ -1,43 +1,33 @@
 <template>
   <div id="app">
-    <div class="header">
-      <c-button @onClick="startSudoku" style="margin-bottom: 2rem;" :disabled="false" color="rgb(0, 0, 8)">Start</c-button>
-      <div id="timer" class="timer">
-        {{ this.getTime.toString() }}
-      </div>
+    <div id="nav">
+      <c-button :color="'#000008'">
+        <router-link to="/">Home</router-link>
+      </c-button>
+      <c-button :color="'#000008'">
+        <a href="https://www.github.com/Thiemooo/sudoku-app/" target="_blank">GitHub</a>
+      </c-button>
     </div>
-    <c-sudoku v-if="getIfShowing"></c-sudoku>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import { mapActions, mapGetters } from 'vuex';
-import CSudoku from './components/Sudoku/CSudoku.vue';
 import CButton from './components/Utility/CButton.vue';
 
 @Component({
   components: {
-    CSudoku,
     CButton,
-  },
-  methods: {
-    ...mapActions(['createSudoku', 'show']),
-    startSudoku() {
-      this.show(false);
-      this.createSudoku();
-    },
-  },
-  computed: {
-    ...mapGetters(['getIfShowing', 'getTime']),
   }
 })
+
 export default class App extends Vue {}
 </script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap&family=Genos&display=swap');
 
 body {
   background-color: rgb(0, 0, 8);
@@ -51,6 +41,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+  text-decoration: none;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -59,35 +50,13 @@ body {
   text-align: center;
   color: #af4e9a;
   height: 100%;
+}
+a {
+  font-family: 'Genos';
+  color: #af4e9a;
+}
+#nav {
   display: flex;
-  flex-direction: column;
-  justify-content: top;
-  align-items: center;
-}
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: right;
-  margin-bottom: 2rem;
-}
-.header > * {
-  margin-left: 2rem;
-}
-.timer {
-  font-family: 'Major Mono Display';
-  font-size: 2pc;
-  color: white;
-}
-
-@media only screen and (max-width: 500px) {
-  body {
-    overflow-y: scroll;
-    padding: 10px;
-  }
-}
-@media only screen and (max-height: 400px) {
-  body {
-    overflow-y: scroll;
-  }
+  justify-content: space-between;
 }
 </style>

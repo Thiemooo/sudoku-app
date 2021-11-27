@@ -14,10 +14,18 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'CButton',
-  props: [
-    'color',
-    'disabled'
-  ],
+  props: {
+    color: {
+      // The background color of the button.
+      type: String,
+      default: '#ffffff',
+    },
+    disabled: {
+      // Whether the button should be disabled or not.
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     onButtonClick(e) {
       this.$emit('onClick', e);
@@ -28,7 +36,7 @@ export default class CButton extends Vue {}
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
 .button {
   background-color: var(--color);
@@ -42,7 +50,7 @@ export default class CButton extends Vue {}
   padding: 0px 16px;
   transition: box-shadow .3s, letter-spacing .1s;
   cursor: pointer;
-  box-shadow: inset 1px 1px 2px rgb(255, 255, 255);
+  box-shadow: inset 1px 1px 2px rgb(185, 185, 185);
 
   &.disabled {
     box-shadow: none!important;
@@ -53,7 +61,7 @@ export default class CButton extends Vue {}
     color: rgb(133, 133, 133);
   }
   &:hover{
-    box-shadow: inset -1px -1px 2px rgb(255, 255, 255);
+    box-shadow: inset -1px -1px 2px rgb(170, 170, 170);
   }
   &:active {
     box-shadow: inset -1px -1px 5px rgb(255, 255, 255);

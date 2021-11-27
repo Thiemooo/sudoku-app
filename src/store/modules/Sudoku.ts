@@ -155,19 +155,19 @@ const actions = {
     let colAdd                           = 1;
 
     
-    // const boilerPlate = [
-    //     [5, 3, 0,   0, 7, 0,   0, 0, 0],
-    //     [0, 0, 0,   1, 9, 5,   0, 0, 0],
-    //     [0, 9, 8,   0, 0, 0,   0, 6, 0],
+    const boilerPlate = [
+        [5, 3, 0,   0, 7, 0,   0, 0, 0],
+        [0, 0, 0,   1, 9, 5,   0, 0, 0],
+        [0, 9, 8,   0, 0, 0,   0, 6, 0],
     
-    //     [8, 0, 0,   0, 0, 0,   0, 0, 3],
-    //     [4, 0, 0,   0, 0, 0,   0, 0, 1],
-    //     [7, 0, 0,   0, 0, 0,   0, 0, 6],
+        [8, 0, 0,   0, 0, 0,   0, 0, 3],
+        [4, 0, 0,   0, 0, 0,   0, 0, 1],
+        [7, 0, 0,   0, 0, 0,   0, 0, 6],
     
-    //     [0, 6, 0,   0, 0, 0,   2, 8, 0],
-    //     [0, 0, 0,   4, 1, 9,   0, 0, 5],
-    //     [0, 0, 0,   0, 8, 0,   0, 7, 9],
-    //   ];
+        [0, 6, 0,   0, 0, 0,   2, 8, 0],
+        [0, 0, 0,   4, 1, 9,   0, 0, 5],
+        [0, 0, 0,   0, 8, 0,   0, 7, 9],
+      ];
 
     // Setting up actionfields
     for (let i = 0; i < actionFields.length; i++) {
@@ -214,7 +214,7 @@ const actions = {
 
     
     // Computing Sudoku (API)
-    const boilerPlate = await createBoilerplate(difficulty);
+    // const boilerPlate = await createBoilerplate(difficulty);
     console.log(boilerPlate);
     const allSolutions = solve(boilerPlate);
     console.log("There are " + allSolutions.length + " possible solutions for this sudoku (difficulty: " + difficulty + ").");
