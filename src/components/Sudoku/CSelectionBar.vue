@@ -9,6 +9,7 @@
                       numberField: nF.data    == 'NUMBER-FIELD',
                       actionField: nF.data    == 'ACTION-FIELD',
                       active:      nF.fieldID == getActionFieldIDs.Notation && getIfIsNoting,
+                      disabled:    shouldDisable(nF.content),
                     }"
                     :width="fieldWidth"
     ></c-sudoku-field>
@@ -32,10 +33,13 @@ import CSudokuField from './CSudokuField.vue';
   methods: {
     onSelectionBarClick(selectionBarField) {
       this.$emit('onSelectionBarClick', selectionBarField);
+    },
+    shouldDisable(number) {
+      return this.getFinishedNumbers.indexOf(number) != -1;
     }
   },
   computed: {
-    ...mapGetters(['getIfIsNoting', 'getActionFieldIDs']),
+    ...mapGetters(['getIfIsNoting', 'getActionFieldIDs', 'getFinishedNumbers']),
   }
 })
 export default class CSelectionBar extends Vue {}

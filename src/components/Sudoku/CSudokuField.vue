@@ -99,6 +99,17 @@ export default class CSudokuField extends Vue {}
   position: relative;
   width: var(--width);
   height: var(--width);
+
+  &.disabled {
+  color: rgba($color: #af4e9a, $alpha: 0.2);
+  border: 1px solid rgba($color: #9992b3, $alpha: 0.2);
+  cursor: default;
+
+  &:hover {
+    color: rgba($color: #af4e9a, $alpha: 0.2);
+    background: rgb(0, 0, 8);
+  }
+}
 }
 .row, .column {
   border: 1px solid rgb(197, 52, 190);
@@ -157,9 +168,30 @@ export default class CSudokuField extends Vue {}
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 500px) {
+  .numberField, .actionField {
+    &:hover {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
+  .active, .active:hover {
+    color: rgb(0, 0, 8);
+    background-color: #af4e9a;
+  }
   .sudoku-field {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+  .notations {
+    font-size: 0.4rem;
+  }
+}
+@media only screen and (min-width: 500px) and (max-width: 750px) {
+  .sudoku-field {
+    font-size: 1.8rem;
+  }
+  .notations {
+    font-size: 0.6rem;
   }
 }
 </style>

@@ -30,21 +30,23 @@ const fallbackField: SudokuField = {
 };
 /*=================================================================*/
 const state: {
-  allSolutions:   number[][][];
-  boilerplate:    number[][];
-  sudokuContent:  SudokuField[][];
-  numberFields:   SudokuField[];
-  actionFields:   SudokuField[];
-  selectedField:  SudokuField;
-  isShowing:      boolean;
-  isNoting:       boolean;
-  notations:      string[];
-  ActionFieldIDs: ActionFieldIDs;
-  steps:          LinkedList;
-  time:           Time;
-  finished:       boolean;
-  fieldWidth:     string;
-  height:         string;
+  allSolutions:     number[][][];
+  boilerplate:      number[][];
+  sudokuContent:    SudokuField[][];
+  numberTracker:  number[]
+  numberFields:     SudokuField[];
+  actionFields:     SudokuField[];
+  selectedField:    SudokuField;
+  isShowing:        boolean;
+  isNoting:         boolean;
+  notations:        string[];
+  ActionFieldIDs:   ActionFieldIDs;
+  steps:            LinkedList;
+  time:             Time;
+  finished:         boolean;
+  fieldWidth:       string;
+  height:           string;
+  finishedNumbers:  number[];
 } = {
   allSolutions: [],
   boilerplate: [],
@@ -63,6 +65,7 @@ const state: {
       notations: [],
     }
   ]],
+  numberTracker: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   selectedField: {
     fieldID: fallbackField.fieldID,
     square: 0,
@@ -120,6 +123,7 @@ const state: {
   finished: false,
   fieldWidth: '50', 
   height: '650px',
+  finishedNumbers: [],
 };
 /*=================================================================*/
 const getters = {
@@ -135,6 +139,8 @@ const getters = {
   getTime:            (state: SudokuState): Time            => state.time,
   getFieldWidth:      (state: SudokuState): string          => state.fieldWidth,
   getSudokuHeight:    (state: SudokuState): string          => state.height,
+  getNumberTracker:   (state: SudokuState): number[]        => state.numberTracker,
+  getFinishedNumbers: (state: SudokuState): number[]        => state.finishedNumbers,
 };
 /*=================================================================*/
 const actions = {
@@ -148,6 +154,7 @@ const actions = {
     let rowAdd                           = 1;
     let colAdd                           = 1;
 
+    
     // const boilerPlate = [
     //     [5, 3, 0,   0, 7, 0,   0, 0, 0],
     //     [0, 0, 0,   1, 9, 5,   0, 0, 0],
@@ -213,6 +220,7 @@ const actions = {
     console.log("There are " + allSolutions.length + " possible solutions for this sudoku (difficulty: " + difficulty + ").");
 
     // Setting up Sudoku for website
+    const numberTracker = state.numberTracker
     for (let square = 0; square < 9; square++) {
       sudoku[square] = new Array(9);
       for (let field = 0; field < 9; field++) {   
@@ -223,7 +231,7 @@ const actions = {
         if (square % 3 == 0) colAdd = 1;
         else if (square % 3 == 2) colAdd = 7;
         else colAdd = 4;
-        
+
         const _square  = square + 1;
         const _row     = Math.floor(field/3) + rowAdd;
         const _column  = field % 3 + colAdd;
@@ -247,6 +255,8 @@ const actions = {
           wrongContent: 0,
           notations: [],
         }
+
+        numberTracker[boilerPlate[_row-1][_column-1]]++;
       }
     }
 
@@ -404,6 +414,7 @@ const actions = {
     if (data.newField.fieldID == fallbackField.fieldID) return;
     
     const boilerPlate = state.boilerplate;
+    const numberTracker = state.numberTracker;
     
     let allSolutions: number[][][];
     // Else: Search and update the corresponding field in the sudoku
@@ -417,6 +428,16 @@ const actions = {
         
         if (!data.newField.wrong) {
           boilerPlate[cF.row-1][cF.column-1] = parseInt(data.newField.content.toString());
+          const finishedNumbers = [];
+          const numberTracker = state.numberTracker;          
+      
+          for (let i = 1; i <= 9; i++) {
+            if (numberTracker[i] >= 9) {
+              finishedNumbers.push(i);
+              commit('setFinishedNumbers', finishedNumbers);
+            }
+          }
+                    
         }
         commit('setBoilerplate',  boilerPlate);
       }
@@ -506,6 +527,9 @@ const actions = {
     commit('setFieldWidth', calcFieldWidth());
     commit('setHeight',     `${sHeight}px`);
   },
+  updateNumberTracker({ commit }: {commit: Commit}, nT: number[]): void {
+    commit('setNumberTracker', nT);
+  }
 };
 /*=================================================================*/
 const mutations = {
@@ -524,9 +548,11 @@ const mutations = {
   insertStep:         (state: SudokuState, newStep: LinkedListNode): LinkedList        => state.steps.insert(newStep),
   popStep:            (state: SudokuState): LinkedList                                 => state.steps.pop(),
   deleteSteps:        (state: SudokuState, id: string): LinkedList                     => state.steps.delete(id),
-  setFinished:        (state: SudokuState, finished: boolean): boolean                 => state.finished      = finished,  
-  setFieldWidth:      (state: SudokuState, width: string): string                      => state.fieldWidth    = width, 
-  setHeight:          (state: SudokuState, height: string): string                     => state.height        = height,
+  setFinished:        (state: SudokuState, finished: boolean): boolean                 => state.finished        = finished,  
+  setFieldWidth:      (state: SudokuState, width: string): string                      => state.fieldWidth      = width, 
+  setHeight:          (state: SudokuState, height: string): string                     => state.height          = height,
+  setNumberTracker:   (state: SudokuState, nT: number[]): number[]                     => state.numberTracker   = nT,
+  setFinishedNumbers: (state: SudokuState, fN: number[]): number[]                     => state.finishedNumbers = fN,
 }
 /*=================================================================*/
 export default {

@@ -26,27 +26,37 @@ import CSelectionBar from './CSelectionBar.vue';
     CSelectionBar,
   },
   methods: {
-    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown', 'setSudokuHeight', 'refreshSize']),
+    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown', 'setSudokuHeight', 'refreshSize', 'updateNumberTracker']),
     onNumberFieldClick(numberField) {
       this.fillInContent(numberField.content);
     },
     fillInContent(content) {
       const selectedField = this.getSelectedField;
-      if (selectedField.hidden) {
+      const numberTracker = this.getNumberTracker;
+
+      if (selectedField.hidden && numberTracker[content] < 9) {
         if (this.getIfIsNoting) this.changeNotations({ field: selectedField, notation: content.toString() });
+        else if (selectedField.wrongContent == content) {
+          selectedField.wrongContent = 0;
+          selectedField.wrong        = false;
+        }
         else {
           if (selectedField.possibleContents.indexOf(content) != -1) {
             selectedField.hidden  = false;
             selectedField.wrong   = false;
             selectedField.content = content;
+            
+            numberTracker[content]++;
+            numberTracker[0]--;
+            this.updateNumberTracker(numberTracker);
           }
           else {
-            selectedField.wrong   = true;
+            selectedField.wrong        = true;
             selectedField.wrongContent = content;
           }
         }
+        this.updateSelectedField({ newField: selectedField, onAction: false });
       }
-      this.updateSelectedField({ newField: selectedField, onAction: false });
     },
     onActionFieldClick(actionField) {
       this.action(actionField.fieldID)
@@ -57,17 +67,14 @@ import CSelectionBar from './CSelectionBar.vue';
       if (actionID == ActionFields.Delete) {
         const selectedField = this.getSelectedField;
         if (!selectedField.wrong) return;
-        console.log(ActionFields.Delete);
         selectedField.wrongContent = 0;
         selectedField.wrong        = false;
         this.updateSelectedField({ newField: selectedField, onAction: true });
       }
       else if (actionID == ActionFields.Notation) {
-        console.log(ActionFields.Notation);
         this.switchIfIsNoting();
       }
       else if (actionID == ActionFields.Clear) {
-        console.log(ActionFields.Clear);
         const selectedField = this.getSelectedField;
         selectedField.notations = [];
         this.updateSelectedField({ newField: selectedField, onAction: true });        
@@ -109,7 +116,7 @@ import CSelectionBar from './CSelectionBar.vue';
     },
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );
@@ -128,11 +135,6 @@ import CSelectionBar from './CSelectionBar.vue';
     getFieldWidth: function() {
       setTimeout(() => {
         this.refreshSize(this.$refs.sudoku.clientHeight);
-        console.clear();
-        console.log('Height: ' + window.innerHeight);
-        console.log('Width: '  + window.innerWidth);
-        console.log(window.innerHeight / window.innerWidth);
-        console.log(this.getFieldWidth);
       }, 10);
     } 
   }
