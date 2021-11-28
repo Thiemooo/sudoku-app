@@ -1,6 +1,6 @@
 <template>
   <div class="game-container">
-    <div class="game" v-if="show"> {{ this.getTime.resume() }}
+    <div class="game" v-if="show">
       <div class="header">
         <div id="timer" class="timer">
           {{ this.getTime.toString() }}
@@ -34,7 +34,6 @@ import CSudoku from '../components/Sudoku/CSudoku.vue';
   },
   created() {
     this.createSudoku();
-    this.getTime.stop();
   },
 })
 

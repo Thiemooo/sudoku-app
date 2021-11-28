@@ -15,7 +15,7 @@
     </div>
     <div class="finished" v-else> {{ this.removeEventListeners() }}
       <h1>Finished!</h1>
-      <h2>You've finished the sudoku in {{ this.getTime.minutes() }}  minutes and {{ this.getTime.seconds()%60 }} seconds! <br> Great job!</h2>
+      <h2>You've finished the sudoku in {{ this.getTime.minutes() > 0 ? `${this.getTime.minutes()} minute${this.getTime.minutes() > 1 ? 's' : '' } and` : ''}} {{ `${this.getTime.seconds()%60} second${this.getTime.seconds()%60 != 1 ? 's' : ''}` }}! <br> Great job!</h2>
       <br><br><br><br><br>
       <c-button :color="'#000008'">
         <router-link to="/">Back to the main menu</router-link>
@@ -198,9 +198,6 @@ export default class CSudoku extends Vue {}
 }
 h1 {
   letter-spacing: 3px;
-}
-h2 {
-  color: #f7a8e6;
 }
 
 @media only screen and (max-width: 500px) {

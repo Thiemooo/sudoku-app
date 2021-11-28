@@ -40,6 +40,10 @@ const controls: Entry[] = [
     title: 'Right-Shift',
     content: 'Toggles notation-mode.'
   },
+  {
+    title: 'Mouse',
+    content: 'Clicking on the corresponding fields will perfom the same actions as with keyboard.'
+  }
 ];
 
 const getters = {

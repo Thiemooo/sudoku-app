@@ -263,8 +263,7 @@ const actions = {
 
     // console.log(allSolutions);
 
-    state.time.stop();
-    state.time.resume();
+    state.time.restart();
 
     commit('setBoilerplate', boilerPlate);
     commit('setSudoku', sudoku);

@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <c-button :color="'#000008'">
+    <c-button>
       <router-link to="/Game">Start a Sudoku-Game</router-link>
     </c-button>
     <br><br><br><br>
-    <c-button :color="'#000008'">
+    <c-button>
       <router-link to="/how-to-play">How To Play</router-link>
     </c-button>
   </div>

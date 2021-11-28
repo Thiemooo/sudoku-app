@@ -87,6 +87,8 @@ export default class CSudokuField extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/colors.scss';
+
 .sudoku-field {
   border: 1px solid rgb(153, 146, 179);
   border-radius: 3px;
@@ -101,23 +103,23 @@ export default class CSudokuField extends Vue {}
   height: var(--width);
 
   &.disabled {
-  color: rgba($color: #af4e9a, $alpha: 0.4);
+  color: rgba($color: $PRIMARY-COLOR, $alpha: 0.4);
   border: 1px solid rgba($color: #9992b3, $alpha: 0.4);
   cursor: default;
 
   &:hover {
-    color: rgba($color: #af4e9a, $alpha: 0.4);
-    background: rgb(0, 0, 8);
+    color: rgba($color: $PRIMARY-COLOR, $alpha: 0.4);
+    background: $BACKGROUND;
   }
 }
 }
 .row, .column {
-  border: 1px solid rgb(197, 52, 190);
-  box-shadow: inset 0 0 5px rgb(92, 28, 89);
+  border: 1px solid $BORDER;
+  box-shadow: inset 0 0 5px $ROW-COLUMN;
 }
 .sameContent {
-  border: 1px solid rgb(216, 105, 210);
-  box-shadow: inset 0 0 15px rgb(201, 134, 197);
+  border: 1px solid $SAME-NUMBER-COLOR;
+  box-shadow: inset 0 0 15px $SAME-NUMBER;
 }
 .selected {
   border: 1px solid rgb(255, 255, 255);
@@ -127,12 +129,12 @@ export default class CSudokuField extends Vue {}
   color: transparent;
 }
 .selectedIncorrect {
-  background-color: #dd6565;
-  color: rgb(0, 0, 8);
+  background-color: $PRIMARY-INCORRECT;
+  color: $INCORRECT-COLOR;
 }
 .incorrect {
-  background-color: #830000;
-  color: rgb(0, 0, 8);
+  background-color: $SECONDARY-INCORRECT;
+  color: $INCORRECT-COLOR;
 }
 .numberField, .actionField {
   transition: background-color 0.2s, color 0.2s;
@@ -142,13 +144,13 @@ export default class CSudokuField extends Vue {}
   }
 
   &:hover  {
-    color: rgb(0, 0, 8);
-    background-color: #af4e9a;
+    color: $BACKGROUND;
+    background-color: $PRIMARY-COLOR;
   }
 }
 .active {
-  color: rgb(0, 0, 8);
-  background-color: #af4e9a;
+  color: $BACKGROUND;
+  background-color: $PRIMARY-COLOR;
 }
 .notations {
   position: absolute;
@@ -176,8 +178,8 @@ export default class CSudokuField extends Vue {}
     }
   }
   .active, .active:hover {
-    color: rgb(0, 0, 8);
-    background-color: #af4e9a;
+    color: $BACKGROUND;
+    background-color: $PRIMARY-COLOR;
   }
   .sudoku-field {
     font-size: 1.5rem;

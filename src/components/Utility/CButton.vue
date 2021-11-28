@@ -3,8 +3,7 @@
       :class="{
         button: true,
         disabled: disabled
-      }"
-      :style="{ '--color': color }">
+      }">
       <slot></slot>
     </button>
 </template>
@@ -15,11 +14,6 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component({
   name: 'CButton',
   props: {
-    color: {
-      // The background color of the button.
-      type: String,
-      default: '#ffffff',
-    },
     disabled: {
       // Whether the button should be disabled or not.
       type: Boolean,
@@ -37,14 +31,14 @@ export default class CButton extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+@import '@/scss/colors.scss';
 
 .button {
-  background-color: var(--color);
+  background-color: $BUTTON-BACKGROUND;
   border: none;
   width: fit-content;
-  color: rgb(236, 236, 236);
   letter-spacing: -1px;
-  font-size: 2rem;
+  font-size: 2.2rem;
   outline: none;
   border-radius: 6px;
   padding: 0px 16px;

@@ -23,6 +23,13 @@ class Time {
     else console.log('Timer is already running!');
   }
 
+  /** Restarts the timer. */
+  public restart(): void {
+    if (this._isActive) { clearInterval(this.timer); this._isActive = false; }
+    this._seconds = 0;
+    this.resume();
+  }
+
   /** Stops the timer. */
   public pause(): void {
     if (this._isActive) { clearInterval(this.timer); this._isActive = false; }

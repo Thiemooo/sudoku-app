@@ -1,12 +1,19 @@
 <template>
   <div id="app">
     <div id="nav">
-      <c-button :color="'#000008'">
-        <router-link to="/">Home</router-link>
-      </c-button>
-      <c-button :color="'#000008'">
-        <a href="https://www.github.com/Thiemooo/sudoku-app/" target="_blank">GitHub</a>
-      </c-button>
+      <div class="left">
+        <c-button>
+          <router-link to="/">🛖 Home</router-link>
+        </c-button>
+        <c-button>
+          <router-link to="/settings">⚙️ Settings</router-link>
+        </c-button>
+      </div>
+      <div class="right">
+        <c-button>
+          <a href="https://www.github.com/Thiemooo/sudoku-app/" target="_blank">GitHub</a>
+        </c-button>
+      </div>
     </div>
     <br>
     <router-view/>
@@ -27,13 +34,14 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+@import './scss/colors.scss';
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap&family=Genos&display=swap');
 
 body {
-  background-color: rgb(0, 0, 8);
+  background-color: $BACKGROUND;
   height: 100vh;
-  padding: 2rem;
+  padding: 0 2rem;
 
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -54,16 +62,27 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #af4e9a;
+  color: $PRIMARY-COLOR;
   height: 100%;
 }
 a, p {
   font-family: 'Genos';
-  color: #af4e9a;
+  color: $PRIMARY-COLOR;
+}
+h2 {
+  color: $SECONDARY-COLOR;
 }
 #nav {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  padding: 2rem 0;
+  background: $BACKGROUND;
+  border-bottom: 1px solid $HEADER-LINE;
+
+  .left > * {
+    margin-right: 2rem;
+  }
 }
 </style>
