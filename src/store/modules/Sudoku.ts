@@ -141,6 +141,7 @@ const getters = {
   getSudokuHeight:    (state: SudokuState): string          => state.height,
   getNumberTracker:   (state: SudokuState): number[]        => state.numberTracker,
   getFinishedNumbers: (state: SudokuState): number[]        => state.finishedNumbers,
+  getIfFinished:      (state: SudokuState): boolean         => state.finished,
 };
 /*=================================================================*/
 const actions = {
@@ -155,19 +156,19 @@ const actions = {
     let colAdd                           = 1;
 
     
-    const boilerPlate = [
-        [5, 3, 0,   0, 7, 0,   0, 0, 0],
-        [0, 0, 0,   1, 9, 5,   0, 0, 0],
-        [0, 9, 8,   0, 0, 0,   0, 6, 0],
+    // const boilerPlate = [
+    //     [5, 3, 0,   0, 7, 0,   0, 0, 0],
+    //     [0, 0, 0,   1, 9, 5,   0, 0, 0],
+    //     [0, 9, 8,   0, 0, 0,   0, 6, 0],
     
-        [8, 0, 0,   0, 0, 0,   0, 0, 3],
-        [4, 0, 0,   0, 0, 0,   0, 0, 1],
-        [7, 0, 0,   0, 0, 0,   0, 0, 6],
+    //     [8, 0, 0,   0, 0, 0,   0, 0, 3],
+    //     [4, 0, 0,   0, 0, 0,   0, 0, 1],
+    //     [7, 0, 0,   0, 0, 0,   0, 0, 6],
     
-        [0, 6, 0,   0, 0, 0,   2, 8, 0],
-        [0, 0, 0,   4, 1, 9,   0, 0, 5],
-        [0, 0, 0,   0, 8, 0,   0, 7, 9],
-      ];
+    //     [0, 6, 0,   0, 0, 0,   2, 8, 0],
+    //     [0, 0, 0,   4, 1, 9,   0, 0, 5],
+    //     [0, 0, 0,   0, 8, 0,   0, 7, 9],
+    //   ];
 
     // Setting up actionfields
     for (let i = 0; i < actionFields.length; i++) {
@@ -214,7 +215,7 @@ const actions = {
 
     
     // Computing Sudoku (API)
-    // const boilerPlate = await createBoilerplate(difficulty);
+    const boilerPlate = await createBoilerplate(difficulty);
     console.log(boilerPlate);
     const allSolutions = solve(boilerPlate);
     console.log("There are " + allSolutions.length + " possible solutions for this sudoku (difficulty: " + difficulty + ").");
@@ -265,14 +266,17 @@ const actions = {
     state.time.stop();
     state.time.resume();
 
-    commit('setSudoku', sudoku);
     commit('setBoilerplate', boilerPlate);
-    commit('setNotations', pseudoNumbers);
+    commit('setSudoku', sudoku);
+    commit('setShow', true);
+    commit('setSelectedField', fallbackField);
     commit('setNumberFields', numberFields);
     commit('setActionFields', actionFields);
-    commit('setShow', true);
+    commit('setNotations', pseudoNumbers);
     commit('setFinished', false);
-    commit('setSelectedField', fallbackField);
+    commit('setNumberTracker', numberTracker);
+    commit('setFinishedNumbers', []);
+    
     // Create sudoku and selection fields
     // const numbers                        = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     // const pseudoNumbers                  = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -414,7 +418,6 @@ const actions = {
     if (data.newField.fieldID == fallbackField.fieldID) return;
     
     const boilerPlate = state.boilerplate;
-    const numberTracker = state.numberTracker;
     
     let allSolutions: number[][][];
     // Else: Search and update the corresponding field in the sudoku
@@ -480,7 +483,9 @@ const actions = {
     });
     if (finished) {
       state.time.pause();
-      commit('setFinished', true);
+      setTimeout(() => {
+        commit('setFinished', true);
+      }, 500);
     }
   },
   /*---------------------------------*/

@@ -1,15 +1,27 @@
 <template>
-  <div class="sudoku-container">
-    <div class="selection-bar-container" :style="{'--sHeight': getSudokuHeight }">
-      <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
-      <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
+  <div class="container">
+    <div class="sudoku-container" v-if="!getIfFinished">
+      <div class="selection-bar-container" :style="{'--sHeight': getSudokuHeight }">
+        <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
+        <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
+      </div>
+      <div ref="sudoku" id="sudoku" class="sudoku">
+        <c-sudoku-square  v-for="sC in this.getContent" 
+                          :key="getContent.indexOf(sC)+1"
+                          :squareID="getContent.indexOf(sC)+1" 
+                          :squareContent="sC"
+        ></c-sudoku-square>
+      </div>
     </div>
-    <div ref="sudoku" id="sudoku" class="sudoku">
-      <c-sudoku-square  v-for="sC in this.getContent" 
-                        :key="getContent.indexOf(sC)+1"
-                        :squareID="getContent.indexOf(sC)+1" 
-                        :squareContent="sC"
-      ></c-sudoku-square>
+    <div class="finished" v-else> {{ this.removeEventListeners() }}
+      <h1>Finished!</h1>
+      <h2>You've finished the sudoku in {{ this.getTime.minutes() }}  minutes and {{ this.getTime.seconds()%60 }} seconds! <br> Great job!</h2>
+      <br><br><br><br><br>
+      <c-button :color="'#000008'">
+        <router-link to="/">Back to the main menu</router-link>
+      </c-button>
+      <h3>or</h3>
+      <c-button @onClick="newSudoku" :color="'#000008'"><p>Start a new game</p></c-button>
     </div>
   </div>
 </template>
@@ -19,14 +31,16 @@ import { mapGetters, mapActions } from 'vuex';
 import { Component, Vue } from 'vue-property-decorator';
 import CSudokuSquare from './CSudokuSquare.vue';
 import CSelectionBar from './CSelectionBar.vue';
+import CButton from '../Utility/CButton.vue';
 
 @Component({
   components: {
     CSudokuSquare,
     CSelectionBar,
+    CButton,
   },
   methods: {
-    ...mapActions(['updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown', 'setSudokuHeight', 'refreshSize', 'updateNumberTracker']),
+    ...mapActions(['createSudoku', 'updateSelectedField', 'switchIfIsNoting', 'changeNotations', 'undoStep', 'onArrowKeyDown', 'setSudokuHeight', 'refreshSize', 'updateNumberTracker']),
     onNumberFieldClick(numberField) {
       this.fillInContent(numberField.content);
     },
@@ -112,11 +126,19 @@ import CSelectionBar from './CSelectionBar.vue';
       }
     },
     onWindowResize() {
-      this.refreshSize(this.$refs.sudoku.clientHeight);
+      if (this.$refs.sudoku != undefined) this.refreshSize(this.$refs.sudoku.clientHeight);
+    },
+    removeEventListeners() {
+      window.removeEventListener('keydown', this.onWindowKeyDown );
+      window.removeEventListener('keypress', this.onWindowKeyPress);
+      window.removeEventListener('resize', this.onWindowResize);
+    },
+    newSudoku() {
+      this.createSudoku();
     },
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker', 'getIfFinished', 'getTime']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );
@@ -164,6 +186,21 @@ export default class CSudoku extends Vue {}
   grid-template-rows: repeat(3, 1fr);
   grid-row-gap: 10px;
   grid-column-gap: 10px;
+}
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+    margin: 10px;
+  }
+}
+h1 {
+  letter-spacing: 3px;
+}
+h2 {
+  color: #f7a8e6;
 }
 
 @media only screen and (max-width: 500px) {

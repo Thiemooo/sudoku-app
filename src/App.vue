@@ -8,6 +8,7 @@
         <a href="https://www.github.com/Thiemooo/sudoku-app/" target="_blank">GitHub</a>
       </c-button>
     </div>
+    <br>
     <router-view/>
   </div>
 </template>
@@ -31,9 +32,14 @@ export default class App extends Vue {}
 
 body {
   background-color: rgb(0, 0, 8);
-  overflow: hidden;
   height: 100vh;
   padding: 2rem;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 * {
   font-family: 'Indie Flower';
@@ -51,12 +57,13 @@ body {
   color: #af4e9a;
   height: 100%;
 }
-a {
+a, p {
   font-family: 'Genos';
   color: #af4e9a;
 }
 #nav {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2rem;
 }
 </style>

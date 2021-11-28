@@ -12,6 +12,11 @@ export interface SudokuField {
   notations:        string[];
 }
 /*=================================================================*/
+export interface Entry {
+  content: string,
+  title:   string,
+}
+/*=================================================================*/
 function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuField): void} ): SudokuField[][] {
   
   // Run the callback function on every field of the sudoku

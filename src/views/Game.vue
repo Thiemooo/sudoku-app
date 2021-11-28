@@ -1,11 +1,16 @@
 <template>
-  <div class="game">
-    <div class="header">
-      <div id="timer" class="timer">
-        {{ this.getTime.toString() }}
+  <div class="game-container">
+    <div class="game" v-if="show"> {{ this.getTime.resume() }}
+      <div class="header">
+        <div id="timer" class="timer">
+          {{ this.getTime.toString() }}
+        </div>
       </div>
+      <c-sudoku></c-sudoku>
     </div>
-    <c-sudoku></c-sudoku>
+    <div class="loading" v-else>
+      <h1>LOADING</h1>
+    </div>
   </div>
 </template>
 
@@ -20,12 +25,16 @@ import CSudoku from '../components/Sudoku/CSudoku.vue';
   },
   methods: {
     ...mapActions(['createSudoku']),
+    show() {
+      return this.getShowing;
+    }
   },
   computed: {
-    ...mapGetters(['getTime']),
+    ...mapGetters(['getTime', 'getShowing']),
   },
   created() {
     this.createSudoku();
+    this.getTime.stop();
   },
 })
 
