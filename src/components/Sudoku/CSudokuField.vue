@@ -87,10 +87,10 @@ export default class CSudokuField extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/colors.scss';
+
 
 .sudoku-field {
-  border: 1px solid rgb(153, 146, 179);
+  border: 1px solid var(--border);
   border-radius: 3px;
   font-size: 3rem;
   cursor: pointer;
@@ -103,23 +103,23 @@ export default class CSudokuField extends Vue {}
   height: var(--width);
 
   &.disabled {
-  color: rgba($color: $PRIMARY-COLOR, $alpha: 0.4);
+  color: rgba($color: var(--primary-color), $alpha: 0.4);
   border: 1px solid rgba($color: #9992b3, $alpha: 0.4);
   cursor: default;
 
   &:hover {
-    color: rgba($color: $PRIMARY-COLOR, $alpha: 0.4);
-    background: $BACKGROUND;
+    color: rgba($color: var(--primary-color), $alpha: 0.4);
+    background: var(--background);
   }
 }
 }
 .row, .column {
-  border: 1px solid $BORDER;
-  box-shadow: inset 0 0 5px $ROW-COLUMN;
+  border: 1px solid var(--row-column-border);
+  box-shadow: inset 0 0 5px var(--row-column);
 }
 .sameContent {
-  border: 1px solid $SAME-NUMBER-COLOR;
-  box-shadow: inset 0 0 15px $SAME-NUMBER;
+  border: 1px solid var(--same-number-border);
+  box-shadow: inset 0 0 15px var(--same-number);
 }
 .selected {
   border: 1px solid rgb(255, 255, 255);
@@ -129,12 +129,12 @@ export default class CSudokuField extends Vue {}
   color: transparent;
 }
 .selectedIncorrect {
-  background-color: $PRIMARY-INCORRECT;
-  color: $INCORRECT-COLOR;
+  background-color: var(--primary-incorrect);
+  color: var(--incorrect-color);
 }
 .incorrect {
-  background-color: $SECONDARY-INCORRECT;
-  color: $INCORRECT-COLOR;
+  background-color: var(--secondary-incorrect);
+  color: var(--incorrect-color);
 }
 .numberField, .actionField {
   transition: background-color 0.2s, color 0.2s;
@@ -144,13 +144,13 @@ export default class CSudokuField extends Vue {}
   }
 
   &:hover  {
-    color: $BACKGROUND;
-    background-color: $PRIMARY-COLOR;
+    color: var(--background);
+    background-color: var(--primary-color);
   }
 }
 .active {
-  color: $BACKGROUND;
-  background-color: $PRIMARY-COLOR;
+  color: var(--background);
+  background-color: var(--primary-color);
 }
 .notations {
   position: absolute;
@@ -178,8 +178,8 @@ export default class CSudokuField extends Vue {}
     }
   }
   .active, .active:hover {
-    color: $BACKGROUND;
-    background-color: $PRIMARY-COLOR;
+    color: var(--background);
+    background-color: var(--primary-color);
   }
   .sudoku-field {
     font-size: 1.5rem;

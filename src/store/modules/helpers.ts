@@ -15,6 +15,7 @@ export interface SudokuField {
 export interface Entry {
   content: string,
   title:   string,
+  id:      string,
 }
 /*=================================================================*/
 function forEachSudokuField(sudoku: SudokuField[][], callback: { (field: SudokuField): void} ): SudokuField[][] {

@@ -117,11 +117,23 @@ import CButton from '../Utility/CButton.vue';
       }
 
       const numberKey = Number.parseInt(e.code.split("Digit")[1]);
-      if (!isNaN(numberKey)) {
-        // If input is a number
-        if (numberKey != 0) {
-          if (e.shiftKey) this.changeNotations({ field: this.getSelectedField, notation: numberKey.toString() });
-          else this.fillInContent(numberKey);
+      const numpadKey = Number.parseInt(e.code.split("Numpad")[1]);
+      let number;
+      let isNumber = false;
+
+      if (isNaN(numberKey)) {
+        if (isNaN(numpadKey)) return;
+        number = numpadKey;
+        isNumber = true;
+      }
+      else {
+        number = numberKey;
+        isNumber = true;
+      }
+      if (isNumber) {
+        if (number != 0) {
+          if (e.shiftKey) this.changeNotations({ field: this.getSelectedField, notation: number.toString() });
+          else this.fillInContent(number);
         }
       }
     },

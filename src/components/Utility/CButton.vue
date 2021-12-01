@@ -31,10 +31,9 @@ export default class CButton extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/scss/colors.scss';
-
 .button {
-  background-color: $BUTTON-BACKGROUND;
+  color: var(--button-color);
+  background-color: var(--button-background);
   border: none;
   width: fit-content;
   letter-spacing: -1px;

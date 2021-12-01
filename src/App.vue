@@ -3,10 +3,10 @@
     <div id="nav">
       <div class="left">
         <c-button>
-          <router-link to="/">🛖 Home</router-link>
+          <router-link to="/">Home</router-link>
         </c-button>
         <c-button>
-          <router-link to="/settings">⚙️ Settings</router-link>
+          <router-link to="/settings">Settings</router-link>
         </c-button>
       </div>
       <div class="right">
@@ -34,12 +34,12 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-@import './scss/colors.scss';
+@import './scss/variables.css';
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap&family=Genos&display=swap');
 
 body {
-  background-color: $BACKGROUND;
+  background-color: var(--background);
   height: 100vh;
   padding: 0 2rem;
 
@@ -62,15 +62,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: $PRIMARY-COLOR;
+  color: var(--primary-color);
   height: 100%;
 }
-a, p {
+p {
   font-family: 'Genos';
-  color: $PRIMARY-COLOR;
+  color: var(--primary-color);
+}
+a {
+  font-family: 'Genos';
+  color: var(--button-color);
 }
 h2 {
-  color: $SECONDARY-COLOR;
+  color: var(--secondary-color);
 }
 #nav {
   position: sticky;
@@ -78,8 +82,8 @@ h2 {
   display: flex;
   justify-content: space-between;
   padding: 2rem 0;
-  background: $BACKGROUND;
-  border-bottom: 1px solid $HEADER-LINE;
+  background: var(--background);
+  border-bottom: 1px solid var(--header-line);
 
   .left > * {
     margin-right: 2rem;

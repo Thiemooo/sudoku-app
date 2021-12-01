@@ -1,34 +1,56 @@
 <template>
-  <div class="rule">
-    <h2>{{ title }}</h2>
-    <h1>{{ content }}</h1>
+  <div  :class="{
+          'entry':  true,
+          'mb':    !d_flex,
+          'd-flex': d_flex,
+        }"
+  >
+    <h2>{{ entry.title }}</h2>
+    <h1>{{ entry.content }}</h1>
   </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
+import Entry from '@/store/modules/helpers';
 
 @Component({
   props: {
-    title: {
-      type: String,
-      default: 'Title',
+    entry: {
+      type: Entry,
+      default: () => {
+        return {
+          title: 'Title',
+          content: 'Content',
+          id: 'id',
+        }
+      },
     },
-    content: {
-      type: String,
-      default: 'Content',
+    d_flex: {
+      type: Boolean,
+      default: false,
     },
-  }
+  },
 })
 
 export default class CEntry extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.rule {
-  width: 50%;
+.entry {
+  width: 100%;
   text-align: left;
+}
+.mb {
   margin-bottom: 1rem;
+}
+.d-flex {
+  display: flex;
+  align-items: center;
+
+  & h1, & h2 {
+    margin-right: 1rem;
+  }
 }
 h2 {
   font-size: 2rem;

@@ -4,12 +4,12 @@
     <div class="htp">
       <h2>Rules:</h2>
       <div class="rules">
-        <c-entry v-for="rule in getRules" :key="rule.title" :content="rule.content" :title="rule.title"></c-entry>
+        <c-entry v-for="rule in getRules" :key="rule.title" :entry="rule"></c-entry>
       </div>
       <br><br>
       <h2>Controls:</h2>
       <div class="controls">
-        <c-entry v-for="control in getControls" :key="control.title" :content="control.content" :title="control.title"></c-entry>
+        <c-entry v-for="control in getControls" :key="control.title" :entry="control"></c-entry>
       </div>
     </div>
   </div>
@@ -32,9 +32,12 @@ import CEntry from '../components/Utility/CEntry.vue';
 export default class HTP extends Vue {}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .htp-container {
   padding-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .rules, .controls {
   display: flex;
