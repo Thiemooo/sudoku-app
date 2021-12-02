@@ -5,14 +5,14 @@
           'd-flex': d_flex,
         }"
   >
-    <h2>{{ entry.title }}</h2>
-    <h1>{{ entry.content }}</h1>
+    <h3>{{ entry.title }}</h3>
+    <h4>{{ entry.content }}</h4>
   </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
-import Entry from '@/store/modules/helpers';
+import { Entry } from '@/store/modules/types';
 
 @Component({
   props: {
@@ -48,14 +48,8 @@ export default class CEntry extends Vue {}
   display: flex;
   align-items: center;
 
-  & h1, & h2 {
+  & h3, & h4 {
     margin-right: 1rem;
   }
-}
-h2 {
-  font-size: 2rem;
-}
-h1 {
-  font-size: 1.3rem;
 }
 </style>

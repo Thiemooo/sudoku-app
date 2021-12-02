@@ -32,15 +32,4 @@ export default class Home extends Vue {}
   align-items: center;
   height: 80%;
 }
-@media only screen and (max-width: 500px) {
-  body {
-    overflow-y: scroll;
-    padding: 10px;
-  }
-}
-@media only screen and (max-height: 400px) {
-  body {
-    overflow-y: scroll;
-  }
-}
 </style>

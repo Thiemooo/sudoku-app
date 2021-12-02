@@ -1,4 +1,4 @@
-import { Entry } from "./helpers"
+import { Entry } from './types';
 
 const rules: Entry[] = [
   {

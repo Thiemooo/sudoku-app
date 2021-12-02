@@ -15,8 +15,9 @@
         </c-button>
       </div>
     </div>
-    <br>
-    <router-view/>
+    <div class="page">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -34,7 +35,7 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
-@import './scss/variables.css';
+@import './css/variables.css';
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap&family=Genos&display=swap');
 
@@ -73,8 +74,21 @@ a {
   font-family: 'Genos';
   color: var(--button-color);
 }
-h2 {
+h1 {
   color: var(--secondary-color);
+  font-size: var(--h1-font-size);
+}
+h2 {
+  color: var(--primary-color);
+  font-size: var(--h2-font-size);
+}
+h3 {
+  color: var(--secondary-color);
+  font-size: var(--h3-font-size);
+}
+h4 {
+  color: var(--primary-color);
+  font-size: var(--h4-font-size);  
 }
 #nav {
   position: sticky;
@@ -84,9 +98,13 @@ h2 {
   padding: 2rem 0;
   background: var(--background);
   border-bottom: 1px solid var(--header-line);
+  margin-bottom: 0.6rem;
 
   .left > * {
     margin-right: 2rem;
   }
+}
+.page {
+  height: 100%;
 }
 </style>

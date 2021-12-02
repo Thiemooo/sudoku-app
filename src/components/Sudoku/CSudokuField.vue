@@ -92,7 +92,7 @@ export default class CSudokuField extends Vue {}
 .sudoku-field {
   border: 1px solid var(--border);
   border-radius: 3px;
-  font-size: 3rem;
+  font-size: var(--field-font-size);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -160,7 +160,7 @@ export default class CSudokuField extends Vue {}
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   color: rgb(119, 119, 119);
-  font-size: 0.7rem;
+  font-size: var(--notation-font-size);
   font-weight: bolder;
   
   & span {
@@ -180,20 +180,6 @@ export default class CSudokuField extends Vue {}
   .active, .active:hover {
     color: var(--background);
     background-color: var(--primary-color);
-  }
-  .sudoku-field {
-    font-size: 1.5rem;
-  }
-  .notations {
-    font-size: 0.4rem;
-  }
-}
-@media only screen and (min-width: 500px) and (max-width: 750px) {
-  .sudoku-field {
-    font-size: 1.8rem;
-  }
-  .notations {
-    font-size: 0.6rem;
   }
 }
 </style>

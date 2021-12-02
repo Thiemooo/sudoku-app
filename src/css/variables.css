@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --background:          #000000;
   --primary-color:       #32a827;
   --secondary-color:     #552424;
@@ -14,6 +15,50 @@
   --primary-incorrect:   #a50000;
   --secondary-incorrect: #630000;
   --incorrect-color:     #000000;
+  
+  /* Font-Sizes for width > 750px */
+  --button-font-size:   2rem;
+  --field-font-size:    3rem;
+  --notation-font-size: 0.8rem;
+  --timer-font-size:    1.6rem;
+  --h1-font-size:       3rem;
+  --h2-font-size:       2.4rem;
+  --h3-font-size:       2rem;
+  --h4-font-size:       1.3rem;
+}
+
+@media only screen and (min-width: 500px) and (max-width: 750px) {
+  :root {
+    --button-font-size:   1.7rem;
+    --field-font-size:    1.8rem;
+    --notation-font-size: 0.6rem;
+    --timer-font-size:    1.2rem;
+    /* --h1-font-size:       3rem;
+    --h2-font-size:       2.4rem;
+    --h3-font-size:       2rem;
+    --h4-font-size:       1.3rem; */
+  }
+}
+@media only screen and (max-width: 500px) {
+  :root {
+    --button-font-size:   1.3rem;
+    --field-font-size:    1.5rem;
+    --notation-font-size: 0.4rem;
+    --timer-font-size:    0.75rem;
+    /* --h1-font-size:       3rem;
+    --h2-font-size:       2.4rem;
+    --h3-font-size:       2rem;
+    --h4-font-size:       1.3rem; */
+  }
+  body {
+    overflow-y: scroll;
+    padding: 10px;
+  }
+}
+@media only screen and (max-height: 400px) {
+  body {
+    overflow-y: scroll;
+  }
 }
 
 /* :root {
@@ -32,9 +77,8 @@
   --primary-incorrect:   #c70000;
   --secondary-incorrect: #9e2b2b;
   --incorrect-color:     #000000;
-} */
-
-/* :root {
+} 
+:root {
   --background:          #000008;
   --primary-color:       #af4e9a;
   --secondary-color:     #f7a8e6;

@@ -52,7 +52,7 @@ export default class App extends Vue {}
 }
 .timer {
   font-family: 'Major Mono Display';
-  font-size: 2pc;
+  font-size: var(--timer-font-size);
   color: white;
 }
 </style>

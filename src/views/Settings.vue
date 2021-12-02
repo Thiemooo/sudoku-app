@@ -6,10 +6,9 @@
       <div class="color-themes">
         <div class="color-theme" v-for="colorTheme in getColorThemes" :key="colorTheme.title">
           <c-entry :entry="colorTheme.entry" :d_flex="true"></c-entry>
-          <div class="preview">
+          <div class="preview" @click="onColorThemeSelect" :id='colorTheme.entry.id'>
             <div v-for="colorEntry in colorTheme.content" :key="colorEntry.id" :style="{ 'background-color': colorEntry.content }"></div>
           </div>
-          <c-button @onClick="onColorThemeSelect" class="button" :id='colorTheme.entry.id'>Select</c-button>
         </div>
       </div>
     </div>
@@ -33,8 +32,8 @@ import CButton from '../components/Utility/CButton.vue';
   methods: {
     ...mapActions(['setColorTheme']),
     onColorThemeSelect(e) {
-      this.setColorTheme(Number.parseInt(e.target.id.split('-')[1]));
-    }
+      this.setColorTheme(Number.parseInt(e.path[1].id.split('-')[1]));
+    },
   }
 })
 
@@ -78,11 +77,5 @@ export default class Settings extends Vue {}
       align-self: center;
     }
   }
-}
-h1 {
-  font-size: 3rem;
-}
-h2 {
-  font-size: 2.4rem;
 }
 </style>

@@ -1,4 +1,4 @@
-import { Entry } from './helpers';
+import { Entry } from './types';
 
 export interface ColorTheme {
   entry:   Entry;
@@ -61,7 +61,7 @@ const colorThemes: ColorTheme[] = [
       id:      'colorTheme-3'
     },
     content: [
-      { title: 'background',          content: '#9c9c9c', id: 'colorTheme3-background' },
+      { title: 'background',          content: '#cfcfcf', id: 'colorTheme3-background' },
       { title: 'primary-color',       content: '#f8f8f8', id: 'colorTheme3-primary-color' },
       { title: 'secondary-color',     content: '#3d3d3d', id: 'colorTheme3-secondary-color' },
       { title: 'button-color',        content: '#ffffff', id: 'colorTheme3-button-color' },
@@ -164,6 +164,10 @@ const colorThemes: ColorTheme[] = [
 const getters = {
   getColorThemes:     (): ColorTheme[] => colorThemes,
 }
+
+export {
+  colorThemes,
+};
 
 export default {
   getters,

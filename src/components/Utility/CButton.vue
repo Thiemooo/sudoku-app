@@ -37,7 +37,7 @@ export default class CButton extends Vue {}
   border: none;
   width: fit-content;
   letter-spacing: -1px;
-  font-size: 2.2rem;
+  font-size: var(--button-font-size);
   outline: none;
   border-radius: 6px;
   padding: 0px 16px;
