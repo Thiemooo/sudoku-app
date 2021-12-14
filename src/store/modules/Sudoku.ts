@@ -1,11 +1,12 @@
 import { Commit, Dispatch } from 'vuex';
-import { SudokuField } from './types';
+import { SudokuField, Language } from './types';
 import { forEachSudokuField/*, shuffleArray*/, calcFieldWidth } from './helpers';
 import { FieldTypes } from './FieldInfo';
 import LinkedList, { LinkedListNode } from './LinkedList';
 import { solve, createBoilerplate } from './SudokuSolver';
 import Time from './Time';
 import { colorThemes } from './ColorHandler';
+import { getLanguage } from './Languages';
 
 /*=================================================================*/
 type SudokuState = typeof state;
@@ -49,6 +50,7 @@ const state: {
   fieldWidth:       string;
   height:           string;
   finishedNumbers:  number[];
+  selectedLanguage: Language;
 } = {
   allSolutions: [],
   boilerplate: [],
@@ -126,6 +128,7 @@ const state: {
   fieldWidth: '50', 
   height: '650px',
   finishedNumbers: [],
+  selectedLanguage: getLanguage('en'),
 };
 /*=================================================================*/
 const getters = {
@@ -144,6 +147,11 @@ const getters = {
   getNumberTracker:   (state: SudokuState): number[]        => state.numberTracker,
   getFinishedNumbers: (state: SudokuState): number[]        => state.finishedNumbers,
   getIfFinished:      (state: SudokuState): boolean         => state.finished,
+  getAPP:             (state: SudokuState): typeof state.selectedLanguage.app      => state.selectedLanguage.app,
+  getHOME:            (state: SudokuState): typeof state.selectedLanguage.home     => state.selectedLanguage.home,
+  getSETTINGS:        (state: SudokuState): typeof state.selectedLanguage.settings => state.selectedLanguage.settings,
+  getHTP:             (state: SudokuState): typeof state.selectedLanguage.htp      => state.selectedLanguage.htp,
+  getFINISHED:        (state: SudokuState): typeof state.selectedLanguage.finished => state.selectedLanguage.finished,
 };
 /*=================================================================*/
 const actions = {
@@ -486,6 +494,9 @@ const actions = {
       state.time.pause();
       setTimeout(() => {
         commit('setFinished', true);
+        setTimeout(() => {
+          commit('setFinished', false);
+        }, 1000);
       }, 500);
     }
   },
@@ -540,6 +551,9 @@ const actions = {
     for (let i = 0; i < colorThemes[0].content.length; i++) {
       document.documentElement.style.setProperty(`--${colorThemes[colorTheme-1].content[i].title}`, colorThemes[colorTheme-1].content[i].content);
     }
+  },
+  selectLanguage     ({ commit }: {commit: Commit}, abbreviation: string): void {
+    commit('setLanguage', getLanguage(abbreviation));
   }
 };
 /*=================================================================*/
@@ -564,6 +578,7 @@ const mutations = {
   setHeight:          (state: SudokuState, height: string): string                     => state.height          = height,
   setNumberTracker:   (state: SudokuState, nT: number[]): number[]                     => state.numberTracker   = nT,
   setFinishedNumbers: (state: SudokuState, fN: number[]): number[]                     => state.finishedNumbers = fN,
+  setLanguage:        (state: SudokuState, L: Language): Language                      => state.selectedLanguage= L,
 }
 /*=================================================================*/
 export default {

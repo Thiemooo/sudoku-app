@@ -1,15 +1,10 @@
-import { Entry } from './types';
-
-export interface ColorTheme {
-  entry:   Entry;
-  content: Entry[];
-}
+import { ColorTheme } from './types';
 
 const colorThemes: ColorTheme[] = [
   {
     entry: {
       title:   '1',
-      content: 'Default Theme',
+      content: 'ENDefault Theme~~DEStandard~~',
       id:      'colorTheme-1'
     },
     content: [
@@ -33,7 +28,7 @@ const colorThemes: ColorTheme[] = [
   {
     entry: {
       title:   '2',
-      content: 'Dark Theme',
+      content: 'ENDark Theme~~DEDunkel~~',
       id:      'colorTheme-2'
     },
     content: [
@@ -57,7 +52,7 @@ const colorThemes: ColorTheme[] = [
   {
     entry: {
       title:   '3',
-      content: 'Light Theme',
+      content: 'ENLight Theme~~DEHell~~',
       id:      'colorTheme-3'
     },
     content: [
@@ -80,95 +75,6 @@ const colorThemes: ColorTheme[] = [
   }
 ];
 
-/*const actions = {
-  setColorTheme(x: any, colorTheme = 0): void {
-    console.log(typeof x);
-    console.log(x);
-    switch (colorTheme) {
-      case 0:
-        // Custom Color-Theme
-        document.documentElement.style.setProperty('--background',          '');
-        document.documentElement.style.setProperty('--primary-color',       '');
-        document.documentElement.style.setProperty('--secondary-color',     '');
-        document.documentElement.style.setProperty('--button-color',        '');
-        document.documentElement.style.setProperty('--button-background',   '');
-        document.documentElement.style.setProperty('--header-line',         '');
-        document.documentElement.style.setProperty('--border',              '');
-        document.documentElement.style.setProperty('--square-box-shadow',   '');
-        document.documentElement.style.setProperty('--row-column-border',   '');
-        document.documentElement.style.setProperty('--row-column',          '');
-        document.documentElement.style.setProperty('--same-number',         '');
-        document.documentElement.style.setProperty('--same-number-color',   '');
-        document.documentElement.style.setProperty('--primary-incorrect',   '');
-        document.documentElement.style.setProperty('--secondary-incorrect', '');
-        document.documentElement.style.setProperty('--incorrect-color',     '');
-          break;
-      case 1:
-        // Default Color-Theme
-        document.documentElement.style.setProperty('--background',          '#000008');
-        document.documentElement.style.setProperty('--primary-color',       '#af4e9a');
-        document.documentElement.style.setProperty('--secondary-color',     '#f7a8e6');
-        document.documentElement.style.setProperty('--button-color',        '#a37caf');
-        document.documentElement.style.setProperty('--button-background',   '#000008');
-        document.documentElement.style.setProperty('--header-line',         '#41977b');
-        document.documentElement.style.setProperty('--border',              '#636060');
-        document.documentElement.style.setProperty('--square-box-shadow',   '#9992b3');
-        document.documentElement.style.setProperty('--row-column-border',   '#c534be');
-        document.documentElement.style.setProperty('--row-column',          '#5c1c59');
-        document.documentElement.style.setProperty('--same-number',         '#c986c5');
-        document.documentElement.style.setProperty('--same-number-color',   '#d869d2');
-        document.documentElement.style.setProperty('--primary-incorrect',   '#bb1414');
-        document.documentElement.style.setProperty('--secondary-incorrect', '#830000');
-        document.documentElement.style.setProperty('--incorrect-color',     '#000008');
-          break;
-      case 2:
-        // Dark Color-Theme
-        document.documentElement.style.setProperty('--background',          '#000000');
-        document.documentElement.style.setProperty('--primary-color',       '#32a827');
-        document.documentElement.style.setProperty('--secondary-color',     '#552424');
-        document.documentElement.style.setProperty('--button-color',        '#ffffff');
-        document.documentElement.style.setProperty('--button-background',   '#646464');
-        document.documentElement.style.setProperty('--header-line',         '#202020');
-        document.documentElement.style.setProperty('--border',              '#252525');
-        document.documentElement.style.setProperty('--square-box-shadow',   '#a37171');
-        document.documentElement.style.setProperty('--row-column-border',   '#1b191b');
-        document.documentElement.style.setProperty('--row-column',          '#9b6f6f');
-        document.documentElement.style.setProperty('--same-number',         '#446d63');
-        document.documentElement.style.setProperty('--same-number-color',   '#000000');
-        document.documentElement.style.setProperty('--primary-incorrect',   '#a50000');
-        document.documentElement.style.setProperty('--secondary-incorrect', '#630000');
-        document.documentElement.style.setProperty('--incorrect-color',     '#000000');
-          break;
-      case 3:
-        // Light Color-Theme
-        document.documentElement.style.setProperty('--background',          '#9c9c9c');
-        document.documentElement.style.setProperty('--primary-color',       '#f8f8f8');
-        document.documentElement.style.setProperty('--secondary-color',     '#3d3d3d');
-        document.documentElement.style.setProperty('--button-color',        '#ffffff');
-        document.documentElement.style.setProperty('--button-background',   '#646464');
-        document.documentElement.style.setProperty('--header-line',         '#202020');
-        document.documentElement.style.setProperty('--border',              '#524e61');
-        document.documentElement.style.setProperty('--square-box-shadow',   '#948d8d');
-        document.documentElement.style.setProperty('--row-column-border',   '#382e37');
-        document.documentElement.style.setProperty('--row-column',          '#ffffff');
-        document.documentElement.style.setProperty('--same-number',         '#c5c5c5');
-        document.documentElement.style.setProperty('--same-number-color',   '#c4c4c4');
-        document.documentElement.style.setProperty('--primary-incorrect',   '#c70000');
-        document.documentElement.style.setProperty('--secondary-incorrect', '#9e2b2b');
-        document.documentElement.style.setProperty('--incorrect-color',     '#000000');
-          break;
-    }
-  }
-};*/
-
-const getters = {
-  getColorThemes:     (): ColorTheme[] => colorThemes,
-}
-
 export {
   colorThemes,
-};
-
-export default {
-  getters,
 };

@@ -7,6 +7,7 @@
   >
     <h3>{{ entry.title }}</h3>
     <h4>{{ entry.content }}</h4>
+    <slot></slot>
   </div>
 </template>
 

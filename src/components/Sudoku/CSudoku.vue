@@ -13,16 +13,7 @@
         ></c-sudoku-square>
       </div>
     </div>
-    <div class="finished" v-else> {{ this.removeEventListeners() }}
-      <h1>Finished!</h1>
-      <h2>You've finished the sudoku in {{ this.getTime.minutes() > 0 ? `${this.getTime.minutes()} minute${this.getTime.minutes() > 1 ? 's' : '' } and` : ''}} {{ `${this.getTime.seconds()%60} second${this.getTime.seconds()%60 != 1 ? 's' : ''}` }}! <br> Great job!</h2>
-      <br><br><br><br><br>
-      <c-button :color="'#000008'">
-        <router-link to="/">Back to the main menu</router-link>
-      </c-button>
-      <h3>or</h3>
-      <c-button @onClick="newSudoku" :color="'#000008'"><p>Start a new game</p></c-button>
-    </div>
+    <div class="finish" v-else>{{ this.onFinish() }}</div>
   </div>
 </template>
 
@@ -140,17 +131,17 @@ import CButton from '../Utility/CButton.vue';
     onWindowResize() {
       if (this.$refs.sudoku != undefined) this.refreshSize(this.$refs.sudoku.clientHeight);
     },
-    removeEventListeners() {
-      window.removeEventListener('keydown', this.onWindowKeyDown );
-      window.removeEventListener('keypress', this.onWindowKeyPress);
-      window.removeEventListener('resize', this.onWindowResize);
-    },
-    newSudoku() {
-      this.createSudoku();
-    },
+    onFinish() {
+      setTimeout(() => {
+        window.removeEventListener('keydown', this.onWindowKeyDown );
+        window.removeEventListener('keypress', this.onWindowKeyPress);
+        window.removeEventListener('resize', this.onWindowResize);
+        this.$router.push('Finished');
+      }, 100);
+    }
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker', 'getIfFinished', 'getTime']),
+    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker', 'getIfFinished']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );

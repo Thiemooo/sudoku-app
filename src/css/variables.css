@@ -1,3 +1,7 @@
+@font-face { font-family: 'Indie Flower';       src: url('./fonts/IndieFlower-Regular.ttf');      }  
+@font-face { font-family: 'Major Mono Display'; src: url('./fonts/MajorMonoDisplay-Regular.ttf'); }
+@font-face { font-family: 'Genos';              src: url('./fonts/Genos-VariableFont_wght.ttf');  }
+
 :root {
   /* Colors */
   --background:          #000000;
@@ -33,10 +37,6 @@
     --field-font-size:    1.8rem;
     --notation-font-size: 0.6rem;
     --timer-font-size:    1.2rem;
-    /* --h1-font-size:       3rem;
-    --h2-font-size:       2.4rem;
-    --h3-font-size:       2rem;
-    --h4-font-size:       1.3rem; */
   }
 }
 @media only screen and (max-width: 500px) {
@@ -45,10 +45,6 @@
     --field-font-size:    1.5rem;
     --notation-font-size: 0.4rem;
     --timer-font-size:    0.75rem;
-    /* --h1-font-size:       3rem;
-    --h2-font-size:       2.4rem;
-    --h3-font-size:       2rem;
-    --h4-font-size:       1.3rem; */
   }
   body {
     overflow-y: scroll;
@@ -60,38 +56,3 @@
     overflow-y: scroll;
   }
 }
-
-/* :root {
-  --background:          #9c9c9c;
-  --primary-color:       #f8f8f8;
-  --secondary-color:     #3d3d3d;
-  --button-color:        #ffffff;
-  --button-background:   #646464;
-  --header-line:         #202020;
-  --border:              #524e61;
-  --square-box-shadow:   #948d8d;
-  --row-column-border:   #382e37;
-  --row-column:          #ffffff;
-  --same-number:         #c5c5c5;
-  --same-number-border:  #c4c4c4;
-  --primary-incorrect:   #c70000;
-  --secondary-incorrect: #9e2b2b;
-  --incorrect-color:     #000000;
-} 
-:root {
-  --background:          #000008;
-  --primary-color:       #af4e9a;
-  --secondary-color:     #f7a8e6;
-  --button-color:        #a37caf;
-  --button-background:   #000008;
-  --header-line:         #41977b;
-  --border:              #636060;
-  --square-box-shadow:   #9992b3;
-  --row-column-border:   #c534be;
-  --row-column:          #5c1c59;
-  --same-number:         #c986c5;
-  --same-number-color:   #d869d2;
-  --primary-incorrect:   #bb1414;
-  --secondary-incorrect: #830000;
-  --incorrect-color:     #000008;
-} */

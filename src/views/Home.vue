@@ -1,17 +1,20 @@
 <template>
   <div class="home">
-    <c-button>
-      <router-link to="/Game">Start a Sudoku-Game</router-link>
-    </c-button>
-    <br><br><br><br>
-    <c-button>
-      <router-link to="/how-to-play">How To Play</router-link>
-    </c-button>
+    <div class="buttons">
+      <c-button>
+        <router-link to="/Game">{{ getHOME.startButton }}</router-link>
+      </c-button>
+      <br><br><br><br>
+      <c-button>
+        <router-link to="/how-to-play">{{ getHOME.htpButton }}</router-link>
+      </c-button>
+    </div>
   </div>
 </template>
 
 <script>
 import { Component, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
 import CSudoku from '../components/Sudoku/CSudoku.vue';
 import CButton from '../components/Utility/CButton.vue';
 
@@ -20,6 +23,9 @@ import CButton from '../components/Utility/CButton.vue';
     CSudoku,
     CButton,
   },
+  computed: {
+    ...mapGetters(['getHOME']),
+  }
 })
 export default class Home extends Vue {}
 </script>
@@ -30,6 +36,9 @@ export default class Home extends Vue {}
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
+}
+.buttons {
+  margin-bottom: 10%;
 }
 </style>

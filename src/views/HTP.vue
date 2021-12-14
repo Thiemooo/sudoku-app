@@ -1,15 +1,15 @@
 <template>
   <div class="htp-container">
-    <h1>How to play:</h1>
+    <h1>{{ getHTP.headline }}</h1>
     <div class="htp">
-      <h2>Rules:</h2>
+      <h2>{{ getHTP.rulesHeadline }}</h2>
       <div class="rules">
-        <c-entry v-for="rule in getRules" :key="rule.title" :entry="rule"></c-entry>
+        <c-entry v-for="rule in getHTP.rules" :key="rule.title" :entry="rule"></c-entry>
       </div>
       <br><br>
-      <h2>Controls:</h2>
+      <h2>{{ getHTP.controlsHeadline }}</h2>
       <div class="controls">
-        <c-entry v-for="control in getControls" :key="control.title" :entry="control"></c-entry>
+        <c-entry v-for="control in getHTP.controls" :key="control.title" :entry="control"></c-entry>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ import CEntry from '../components/Utility/CEntry.vue';
     CEntry,
   },
   computed: {
-    ...mapGetters(['getRules', 'getControls']),
+    ...mapGetters(['getHTP']),
   }
 })
 
@@ -43,11 +43,5 @@ export default class HTP extends Vue {}
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-h1 {
-  font-size: 3rem;
-}
-h2 {
-  font-size: 2.4rem;
 }
 </style>

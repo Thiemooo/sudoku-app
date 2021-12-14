@@ -1,15 +1,21 @@
 <template>
   <div class="settings-container">
-    <h1>Colors:</h1>
+    <h1>{{ getSETTINGS.headline }}</h1>
     <div class="settings">
-      <h2>Color Themes:</h2>
+      <h2>{{ getSETTINGS.colorHeadline }}</h2>
       <div class="color-themes">
         <div class="color-theme" v-for="colorTheme in getColorThemes" :key="colorTheme.title">
-          <c-entry :entry="colorTheme.entry" :d_flex="true"></c-entry>
+          <c-entry class="d-flex" :entry="getSETTINGS.colorThemes[getColorThemes.indexOf(colorTheme)]"></c-entry>
           <div class="preview" @click="onColorThemeSelect" :id='colorTheme.entry.id'>
             <div v-for="colorEntry in colorTheme.content" :key="colorEntry.id" :style="{ 'background-color': colorEntry.content }"></div>
           </div>
         </div>
+      </div>
+      <h2 class="mt-10 mb-6">{{ getSETTINGS.languageHeadline }}</h2>
+      <div class="languages">
+        <c-entry class="language d-flex" v-for="language in getSETTINGS.languages" :key="language.id" :entry="language">
+          <c-button @onClick="onSelectLanguage" :id="language.id">{{ getSETTINGS.selectButtonText }}</c-button>
+        </c-entry>
       </div>
     </div>
   </div>
@@ -27,13 +33,16 @@ import CButton from '../components/Utility/CButton.vue';
     CButton,
   },
   computed: {
-    ...mapGetters(['getColorThemes']),
+    ...mapGetters(['getColorThemes', 'getSETTINGS']),
   },
   methods: {
-    ...mapActions(['setColorTheme']),
+    ...mapActions(['setColorTheme', 'selectLanguage']),
     onColorThemeSelect(e) {
       this.setColorTheme(Number.parseInt(e.path[1].id.split('-')[1]));
     },
+    onSelectLanguage(e) {
+      this.selectLanguage(e.path[0].id);
+    }
   }
 })
 
@@ -76,6 +85,14 @@ export default class Settings extends Vue {}
       height: fit-content;
       align-self: center;
     }
+  }
+}
+.languages {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+
+  & .language {
+    justify-content: right;
   }
 }
 </style>
