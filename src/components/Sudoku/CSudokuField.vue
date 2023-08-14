@@ -86,10 +86,10 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class CSudokuField extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
 
-.sudoku-field {
+/* .sudoku-field {
   border: 1px solid var(--border);
   border-radius: 3px;
   font-size: var(--field-font-size);
@@ -181,5 +181,92 @@ export default class CSudokuField extends Vue {}
     color: var(--background);
     background-color: var(--primary-color);
   }
+} */
+
+.sudoku-field {
+   border: 1px solid var(--border);
+   border-radius: 3px;
+   font-size: var(--field-font-size);
+   cursor: pointer;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex: 0 0 100%;
+   position: relative;
+   width: var(--width);
+   height: var(--width);
 }
+ .sudoku-field.disabled {
+   color: rgba(0, 0, 0, 0.4);
+   border: 1px solid rgba(153, 146, 179, 0.4);
+   cursor: default;
+}
+ .sudoku-field.disabled:hover {
+   color: rgba(0, 0, 0, 0.4);
+   background: var(--background);
+}
+ .row, .column {
+   border: 1px solid var(--row-column-border);
+   box-shadow: inset 0 0 5px var(--row-column);
+}
+ .sameContent {
+   border: 1px solid var(--same-number-border);
+   box-shadow: inset 0 0 15px var(--same-number);
+}
+ .selected {
+   border: 1px solid #fff;
+   box-shadow: inset 0 0 10px #e9e9e9;
+}
+ .hidden {
+   color: transparent;
+}
+ .selectedIncorrect {
+   background-color: var(--primary-incorrect);
+   color: var(--incorrect-color);
+}
+ .incorrect {
+   background-color: var(--secondary-incorrect);
+   color: var(--incorrect-color);
+}
+ .numberField, .actionField {
+   transition: background-color 0.2s, color 0.2s;
+}
+ .numberField:active, .actionField:active {
+   color: white;
+}
+ .numberField:hover, .actionField:hover {
+   color: var(--background);
+   background-color: var(--primary-color);
+}
+ .active {
+   color: var(--background);
+   background-color: var(--primary-color);
+}
+ .notations {
+   position: absolute;
+   width: var(--width);
+   height: var(--width);
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(3, 1fr);
+   color: #777;
+   font-size: var(--notation-font-size);
+   font-weight: bolder;
+}
+ .notations span {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+ @media only screen and (max-width: 500px) {
+   .numberField:hover, .actionField:hover {
+     color: inherit;
+     background-color: inherit;
+  }
+   .active, .active:hover {
+     color: var(--background);
+     background-color: var(--primary-color);
+  }
+}
+ 
 </style>

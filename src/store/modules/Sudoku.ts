@@ -165,7 +165,6 @@ const actions = {
     let rowAdd                           = 1;
     let colAdd                           = 1;
 
-    
     // const boilerPlate = [
     //     [5, 3, 0,   0, 7, 0,   0, 0, 0],
     //     [0, 0, 0,   1, 9, 5,   0, 0, 0],

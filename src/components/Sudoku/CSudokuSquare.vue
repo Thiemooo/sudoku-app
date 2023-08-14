@@ -43,7 +43,7 @@ import CSudokuField from './CSudokuField.vue';
 export default class CSudokuSquare extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .sudoku-square {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

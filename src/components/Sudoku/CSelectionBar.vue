@@ -45,7 +45,7 @@ import CSudokuField from './CSudokuField.vue';
 export default class CSelectionBar extends Vue {}
 </script>
 
-<style lang="scss">
+<style lang="css">
 .selection-bar {
   display: grid;
   grid-row-gap: calc(50px/9);

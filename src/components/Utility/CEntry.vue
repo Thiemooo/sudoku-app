@@ -37,8 +37,8 @@ import { Entry } from '@/store/modules/types';
 export default class CEntry extends Vue {}
 </script>
 
-<style lang="scss" scoped>
-.entry {
+<style lang="css" scoped>
+/* .entry {
   width: 100%;
   text-align: left;
 }
@@ -52,5 +52,20 @@ export default class CEntry extends Vue {}
   & h3, & h4 {
     margin-right: 1rem;
   }
+} */
+
+.entry {
+   width: 100%;
+   text-align: left;
+}
+ .mb {
+   margin-bottom: 1rem;
+}
+ .d-flex {
+   display: flex;
+   align-items: center;
+}
+ .d-flex h3, .d-flex h4 {
+   margin-right: 1rem;
 }
 </style>

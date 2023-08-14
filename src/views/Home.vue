@@ -30,7 +30,7 @@ import CButton from '../components/Utility/CButton.vue';
 export default class Home extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .home {
   display: flex;
   flex-direction: column;

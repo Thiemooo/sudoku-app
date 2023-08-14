@@ -40,8 +40,8 @@ import CButton from './components/Utility/CButton.vue';
 export default class App extends Vue {}
 </script>
 
-<style lang="scss">
-@import './css/variables.css';
+<style lang="css">
+/* @import './css/variables.css';
 @import './css/global.css';
 @import './css/classes.scss';
 
@@ -78,5 +78,42 @@ export default class App extends Vue {}
 .page {
   padding: 0 2rem;
   height: 100%;
+} */
+
+@import './css/variables.css';
+ @import './css/global.css';
+ @import './css/classes.css';
+ #app {
+   font-family: Avenir, Helvetica, Arial, sans-serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   text-align: center;
+   color: var(--primary-color);
+   height: 100%;
 }
+ #nav {
+   position: sticky;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   top: 0;
+   background: var(--background);
+   margin-bottom: 0.6rem;
+   z-index: 1;
+}
+ #nav .nav {
+   width: 95%;
+   border-bottom: 1px solid var(--header-line);
+   display: flex;
+   justify-content: space-between;
+   padding: 2rem 1rem;
+}
+ #nav .left > * {
+   margin-right: 2rem;
+}
+ .page {
+   padding: 0 2rem;
+   height: 100%;
+}
+ 
 </style>

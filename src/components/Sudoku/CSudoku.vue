@@ -167,8 +167,8 @@ import CButton from '../Utility/CButton.vue';
 export default class CSudoku extends Vue {}
 </script>
 
-<style lang="scss">
-.sudoku-container {
+<style lang="css">
+/* .sudoku-container {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -212,5 +212,50 @@ h1 {
     height: 25%;
     width: var(--sHeight);
   }
+} */
+
+.sudoku-container {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   align-items: center;
+   height: fit-content;
 }
+ .selection-bar-container {
+   width: 25%;
+   height: var(--sHeight);
+   display: flex;
+   justify-content: space-evenly;
+}
+ .sudoku {
+   width: fit-content;
+   height: fit-content;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(3, 1fr);
+   grid-row-gap: 10px;
+   grid-column-gap: 10px;
+}
+ .finished {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+ .finished > * {
+   margin: 10px;
+}
+ h1 {
+   letter-spacing: 3px;
+}
+ @media only screen and (max-width: 500px) {
+   .sudoku-container {
+     flex-direction: column-reverse;
+  }
+   .selection-bar-container {
+     flex-direction: column;
+     height: 25%;
+     width: var(--sHeight);
+  }
+}
+ 
 </style>

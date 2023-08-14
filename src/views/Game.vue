@@ -33,6 +33,7 @@ import CSudoku from '../components/Sudoku/CSudoku.vue';
     ...mapGetters(['getTime', 'getShowing']),
   },
   created() {
+    console.log("Creating Sudoku");
     this.createSudoku();
   },
 })
@@ -40,7 +41,7 @@ import CSudoku from '../components/Sudoku/CSudoku.vue';
 export default class App extends Vue {}
 </script>
 
-<style lang="scss">
+<style lang="css">
 .header {
   width: 100%;
   display: flex;

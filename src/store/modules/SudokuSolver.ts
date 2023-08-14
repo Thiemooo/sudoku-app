@@ -73,7 +73,7 @@ async function createBoilerplate(difficulty: string): Promise<number[][]> {
   //   [0, 0, 0,   0, 8, 0,   0, 7, 9],
   // ];
   
-  const res = await fetch(`https://sugoku.onrender.com//board?difficulty=${difficulty}`);
+  const res = await fetch(`https://sugoku.onrender.com/board?difficulty=${difficulty}`);
   const sudoku = await res.json();
   return sudoku.board;
 }

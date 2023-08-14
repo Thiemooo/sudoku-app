@@ -30,8 +30,8 @@ export default class CButton extends Vue {}
 
 </script>
 
-<style lang="scss" scoped>
-.button {
+<style lang="css" scoped>
+/* .button {
   color: var(--button-color);
   background-color: var(--button-background);
   border: none;
@@ -59,6 +59,34 @@ export default class CButton extends Vue {}
   &:active {
     box-shadow: inset -1px -1px 5px rgb(255, 255, 255);
   }
-}  
-
+}   */
+.button {
+   color: var(--button-color);
+   background-color: var(--button-background);
+   border: none;
+   width: fit-content;
+   letter-spacing: -1px;
+   font-size: var(--button-font-size);
+   outline: none;
+   border-radius: 6px;
+   padding: 0px 16px;
+   transition: box-shadow 0.3s, letter-spacing 0.1s;
+   cursor: pointer;
+   box-shadow: inset 1px 1px 2px #b9b9b9;
+}
+ .button.disabled {
+   box-shadow: none !important;
+   user-select: none;
+   cursor: default;
+   pointer-events: none;
+   background-color: rgba(182, 182, 182, 0.76);
+   color: #858585;
+}
+ .button:hover {
+   box-shadow: inset -1px -1px 2px #aaa;
+}
+ .button:active {
+   box-shadow: inset -1px -1px 5px #fff;
+}
+ 
 </style>

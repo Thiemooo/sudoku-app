@@ -38,10 +38,10 @@ import CButton from '../components/Utility/CButton.vue';
   methods: {
     ...mapActions(['setColorTheme', 'selectLanguage']),
     onColorThemeSelect(e) {
-      this.setColorTheme(Number.parseInt(e.path[1].id.split('-')[1]));
+      this.setColorTheme(Number.parseInt(e.composedPath()[1].id.split('-')[1]));
     },
     onSelectLanguage(e) {
-      this.selectLanguage(e.path[0].id);
+      this.selectLanguage(e.composedPath()[0].id);
     }
   }
 })
@@ -49,8 +49,8 @@ import CButton from '../components/Utility/CButton.vue';
 export default class Settings extends Vue {}
 </script>
 
-<style lang="scss" scoped>
-.settings-container {
+<style lang="css" scoped>
+/* .settings-container {
   padding-bottom: 5%;
   display: flex;
   flex-direction: column;
@@ -94,5 +94,47 @@ export default class Settings extends Vue {}
   & .language {
     justify-content: right;
   }
+} */
+
+.settings-container {
+   padding-bottom: 5%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
+ .settings {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+ .color-themes {
+   display: flex;
+   flex-wrap: wrap;
+}
+ .color-themes .color-theme {
+   display: flex;
+   flex-wrap: wrap;
+}
+ .color-themes .color-theme .preview {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   box-shadow: 0px 0px 10px white, 0px 0px 10px black;
+}
+ .color-themes .color-theme .preview > div {
+   width: 50px;
+   height: 50px;
+}
+ .color-themes .color-theme .button {
+   margin-left: 3rem;
+   height: fit-content;
+   align-self: center;
+}
+ .languages {
+   display: grid;
+   grid-template-columns: repeat(1, 1fr);
+}
+ .languages .language {
+   justify-content: right;
+}
+ 
 </style>

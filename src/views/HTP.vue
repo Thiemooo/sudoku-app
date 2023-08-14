@@ -32,7 +32,7 @@ import CEntry from '../components/Utility/CEntry.vue';
 export default class HTP extends Vue {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 .htp-container {
   padding-bottom: 5%;
   display: flex;
