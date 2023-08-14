@@ -34,6 +34,7 @@ const fallbackField: SudokuField = {
 /*=================================================================*/
 const state: {
   allSolutions:     number[][][];
+  solutionCount:    number;
   boilerplate:      number[][];
   sudokuContent:    SudokuField[][];
   numberTracker:  number[]
@@ -53,6 +54,7 @@ const state: {
   selectedLanguage: Language;
 } = {
   allSolutions: [],
+  solutionCount: 0,
   boilerplate: [],
   sudokuContent: [[
     {
@@ -151,7 +153,9 @@ const getters = {
   getHOME:            (state: SudokuState): typeof state.selectedLanguage.home     => state.selectedLanguage.home,
   getSETTINGS:        (state: SudokuState): typeof state.selectedLanguage.settings => state.selectedLanguage.settings,
   getHTP:             (state: SudokuState): typeof state.selectedLanguage.htp      => state.selectedLanguage.htp,
+  getGAME:            (state: SudokuState): typeof state.selectedLanguage.game     => state.selectedLanguage.game,
   getFINISHED:        (state: SudokuState): typeof state.selectedLanguage.finished => state.selectedLanguage.finished,
+  getSolutionCount:   (state: SudokuState): number                                 => state.solutionCount,
 };
 /*=================================================================*/
 const actions = {
@@ -284,6 +288,7 @@ const actions = {
     commit('setFinished', false);
     commit('setNumberTracker', numberTracker);
     commit('setFinishedNumbers', []);
+    commit('setSolutionCount', 0);
     
     // Create sudoku and selection fields
     // const numbers                        = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -463,6 +468,7 @@ const actions = {
       allSolutions = solve(boilerPlate);
       // console.log(allSolutions);
       console.log(allSolutions.length + " possibilities.");
+      commit('setSolutionCount', allSolutions.length);
       
       const sudoku = forEachSudokuField(newSudoku, (cF) => {
         if (cF.content == 0) {
@@ -578,6 +584,7 @@ const mutations = {
   setNumberTracker:   (state: SudokuState, nT: number[]): number[]                     => state.numberTracker   = nT,
   setFinishedNumbers: (state: SudokuState, fN: number[]): number[]                     => state.finishedNumbers = fN,
   setLanguage:        (state: SudokuState, L: Language): Language                      => state.selectedLanguage= L,
+  setSolutionCount:   (state: SudokuState, c: number): number                          => state.solutionCount   = c,
 }
 /*=================================================================*/
 export default {

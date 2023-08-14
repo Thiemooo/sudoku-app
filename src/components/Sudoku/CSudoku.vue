@@ -1,19 +1,20 @@
 <template>
   <div class="container">
     <div class="sudoku-container" v-if="!getIfFinished">
-      <div class="selection-bar-container" :style="{'--sHeight': getSudokuHeight }">
-        <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
-        <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
-      </div>
-      <div ref="sudoku" id="sudoku" class="sudoku">
-        <c-sudoku-square  v-for="sC in this.getContent" 
-                          :key="getContent.indexOf(sC)+1"
-                          :squareID="getContent.indexOf(sC)+1" 
-                          :squareContent="sC"
-        ></c-sudoku-square>
-      </div>
+        <div class="selection-bar-container" :style="{'--sHeight': getSudokuHeight }">
+          <c-selection-bar :fieldWidth="getFieldWidth" :content="getNumberFields" @onSelectionBarClick="onNumberFieldClick"></c-selection-bar>
+          <c-selection-bar :content="getActionFields" @onSelectionBarClick="onActionFieldClick"></c-selection-bar>
+        </div>
+        <div ref="sudoku" id="sudoku" class="sudoku">
+          <c-sudoku-square  v-for="sC in this.getContent" 
+                            :key="getContent.indexOf(sC)+1"
+                            :squareID="getContent.indexOf(sC)+1" 
+                            :squareContent="sC"
+          ></c-sudoku-square>
+        </div>
     </div>
     <div class="finish" v-else>{{ this.onFinish() }}</div>
+      <h2 v-if="this.getSolutionCount > 1">{{ `${this.getSolutionCount} ${getGAME.possibilities}.` }} </h2>
   </div>
 </template>
 
@@ -141,7 +142,7 @@ import CButton from '../Utility/CButton.vue';
     }
   },
   computed: {
-    ...mapGetters(['getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker', 'getIfFinished']),
+    ...mapGetters(['getGAME', 'getSolutionCount', 'getActionFieldIDs', 'getContent', 'getNumberFields', 'getActionFields', 'getSelectedField', 'getIfIsNoting', 'getSteps', 'getFieldWidth', 'getSudokuHeight', 'getNumberTracker', 'getIfFinished']),
   },
   created() {
     window.addEventListener('keydown', this.onWindowKeyDown );

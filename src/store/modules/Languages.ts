@@ -28,6 +28,9 @@ const Languages: Language[] = [
       languages: getLanguages(),
       selectButtonText: 'Select'
     },
+    game: {
+      possibilities: 'remaining solutions for this sudoku'
+    },
     finished: {
       headline: 'Finished',
       text: "You've finished the sudoku in ~{{ this.getTime.minutes() > 0 ? `${this.getTime.minutes()} minute${this.getTime.minutes() > 1 ? 's' : '' } and` : ''}}~~ #~{{ `${this.getTime.seconds()%60} second${this.getTime.seconds()%60 != 1 ? 's' : ''}` }}##!",
@@ -61,6 +64,9 @@ const Languages: Language[] = [
       languageHeadline: 'Sprachen',
       languages: getLanguages(),
       selectButtonText: 'Auswählen'
+    },
+    game: {
+      possibilities: 'verschiedene Lösungen für dieses Sudoku'
     },
     finished: {
       headline: 'Geschafft!',

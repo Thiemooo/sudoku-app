@@ -48,6 +48,9 @@ export interface Language {
     languages:        Entry[];
     selectButtonText: string;
   },
+  game: {
+    possibilities:    string;
+  },
   finished: {
     headline:         string;
     text:             string;
